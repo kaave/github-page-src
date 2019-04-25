@@ -25,6 +25,8 @@ module.exports = {
     'import/no-unresolved': 'off',
     // クラスメンバーは改行で区切るが、1行の場合はスルー
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    // dependenciesに入ってないのをimportすると怒る 無効化 vueとかあるんで
+    'import/no-extraneous-dependencies': 'off',
 
     /*
      * typescript

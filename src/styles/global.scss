@@ -1,34 +1,43 @@
-@import './variables';
-@import './mixins';
+@import "./variables";
+@import "./mixins";
+@import "./reset";
 
+html,
 body {
-  font-family: $fontFamilyBase;
+    font-family: $fontFamilyBase;
+    font-feature-settings: "palt";
+    letter-spacing: 0.02em;
+    word-spacing: 1px;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
 
 pre {
-  font-family: $fontFamilyMono;
-  font-weight: $fontWeightNormal;
+    font-family: $fontFamilyMono;
+    font-weight: $fontWeightNormal;
 }
 
 @include notSp {
-  .-hidden-pc {
-    display: none !important;
-  }
+    .-hidden-pc {
+        display: none !important;
+    }
 }
 
 @include sp {
-  .-hidden-sp {
-    display: none !important;
-  }
+    .-hidden-sp {
+        display: none !important;
+    }
 }
 
 .-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
