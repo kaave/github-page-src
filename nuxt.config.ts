@@ -79,6 +79,7 @@ const config: NuxtConfiguration = {
     '@nuxtjs/dotenv',
     '@nuxtjs/sitemap',
     '@nuxtjs/style-resources',
+    '@nuxtjs/apollo',
     [
       'nuxt-imagemin',
       {
@@ -107,6 +108,15 @@ const config: NuxtConfiguration = {
       },
     ],
   ],
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'https://api-apeast.graphcms.com/v1/cjtk95ol51hpr01dnf53vq3ji/master',
+        // wsEndpoint: 'ws://localhost:4000/graphql',
+        // websocketsOnly: true,
+      },
+    },
+  },
   axios: {},
   sitemap: {
     path: './sitemap.xml',

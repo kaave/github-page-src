@@ -1,0 +1,18 @@
+query content {
+  entries {
+    status
+    id
+    publish
+    subject
+    entry
+    # thumbnail {
+    #   id
+    #   handle
+    #   fileName
+    #   height
+    #   width
+    #   size
+    #   mimeType
+    # }
+  }
+}

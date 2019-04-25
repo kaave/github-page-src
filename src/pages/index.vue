@@ -10,15 +10,24 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import EntriesQuery from '../apollo/query/entries.gql';
 import IntroductionComponent from '~/components/Introduction.vue';
 
-type Data = { tasks: Promise<any>[] };
+type Entry = {
+  status: string;
+  id: string;
+  publish: string;
+  subject: string;
+  entry: string;
+};
+
+type Data = { tasks: Promise<any>[]; entries: Entry[] };
 type Methods = {};
 type Computed = {};
 type Props = {};
 
 const tasks = [...Array(5).keys()].map(i => new Promise(resolve => setTimeout(resolve, i * 500)));
-const defaultData: Data = { tasks };
+const defaultData: Data = { tasks, entries: [] };
 const components = { IntroductionComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
@@ -26,9 +35,17 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return { ...defaultData };
   },
+  mounted() {
+    console.log(this.entries);
+  },
   methods: {
     onTaskFinished() {
       console.log('finished');
+    },
+  },
+  apollo: {
+    entries: {
+      query: EntriesQuery,
     },
   },
 });
