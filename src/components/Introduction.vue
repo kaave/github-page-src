@@ -10,15 +10,21 @@
 <script lang="ts">
 import Vue from 'vue';
 
-type Data = { dotCount: number; intervalID?: NodeJS.Timeout };
+type Data = { dotCount: number; finishedPromises: number; intervalID?: NodeJS.Timeout };
 type Methods = {};
 type Computed = { dotString: string; backgroundSplitCount: number };
-type Props = {};
+type Props = { tasks: Promise<any>[] };
 
-const defaultData: Data = { dotCount: 0 };
+const defaultData: Data = { dotCount: 0, finishedPromises: 0 };
 const maxDotCount = 3;
 
 export default Vue.extend<Data, Methods, Computed, Props>({
+  props: {
+    tasks: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return { ...defaultData };
   },
@@ -31,10 +37,20 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   mounted() {
+    console.log('mounted!');
     if (this.intervalID) return;
     this.intervalID = setInterval(() => {
       this.dotCount = (this.dotCount + 1) % (maxDotCount + 1);
     }, 1000);
+
+    this.tasks.forEach(promise =>
+      promise.then(() => {
+        this.finishedPromises += 1;
+        if (this.finishedPromises === this.tasks.length) {
+          this.$emit('on-finished');
+        }
+      }),
+    );
   },
   beforeDestroy() {
     if (!this.intervalID) return;

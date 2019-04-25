@@ -1,6 +1,6 @@
 <template>
   <div class="Container">
-    <introduction-component />
+    <introduction-component :tasks="tasks" @on-finished="onTaskFinished" />
     <header id="header" class="Header" role="banner">Header</header>
     <main id="main" class="Main" role="main">Main</main>
     <footer id="footer" class="Footer">Footer</footer>
@@ -12,17 +12,24 @@ import Vue from 'vue';
 
 import IntroductionComponent from '~/components/Introduction.vue';
 
-type Data = {};
+type Data = { tasks: Promise<any>[] };
 type Methods = {};
 type Computed = {};
 type Props = {};
-const defaultData: Data = {};
+
+const tasks = [...Array(5).keys()].map(i => new Promise(resolve => setTimeout(resolve, i * 500)));
+const defaultData: Data = { tasks };
 const components = { IntroductionComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   data() {
     return { ...defaultData };
+  },
+  methods: {
+    onTaskFinished() {
+      console.log('finished');
+    },
   },
 });
 </script>
