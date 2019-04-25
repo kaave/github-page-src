@@ -1,0 +1,163 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { RuleSetLoader } from 'webpack';
+import NuxtConfiguration from '@nuxt/config';
+import Dotenv from 'dotenv';
+import Fibers from 'fibers';
+import Sass from 'sass';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminPngquant from 'imagemin-pngquant';
+import imageminWebp from 'imagemin-webp';
+// import imageminGif2Webp from 'imagemin-gif2webp';
+
+Dotenv.config();
+
+/*
+ * common
+ */
+const host = process.env.HOST || 'localhost';
+const port = parseInt(process.env.PORT || '3000', 10);
+const baseUrl = process.env.BASE_URL || `http://${host}:${port}`;
+const polyfills = ['default', 'es2015', 'es2016', 'es2017', 'IntersectionObserver'];
+
+/*
+ * meta
+ */
+const title = 'Nuxt + TypeScript + Scss';
+const description = 'Nuxt.js with Typescript and Scss.';
+const metaImage = 'https://dummyimage.com/300x200/3b8070/fff.png&text=Nuxt.js+template';
+
+const og = [
+  { property: 'og:title', content: title },
+  { property: 'og:description', content: description },
+  { property: 'og:image', content: metaImage },
+  { property: 'og:type', content: 'website' },
+  { property: 'og:url', content: baseUrl },
+  { property: 'og:site_name', content: title },
+];
+const twitter = [
+  { property: 'twitter:card', content: 'summary_large_image' },
+  // { property: "twitter:site", content: "@BarackObama" }
+];
+const meta = [
+  { charset: 'utf-8' },
+  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  { hid: 'description', name: 'description', content: description },
+  { hid: 'itempropName', itemprop: 'name', content: title },
+  { hid: 'itempropDesc', itemprop: 'description', content: description },
+  { hid: 'itempropImage', itemprop: 'image', content: metaImage },
+  {
+    hid: 'format-detection',
+    name: 'format-detection',
+    content: 'email=no,telephone=no,address=no',
+  },
+  ...og,
+  ...twitter,
+];
+
+const config: NuxtConfiguration = {
+  mode: 'universal',
+  srcDir: './src',
+  head: {
+    title,
+    meta,
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src: `https://polyfill.io/v3/polyfill.min.js?features=${polyfills.join('%2C')}&flags=gated`,
+        type: 'text/javascript',
+        body: true,
+        defer: true,
+        crossorigin: 'anonymous',
+      },
+    ],
+  },
+  loading: { color: '#fff' },
+  css: ['sanitize.css', '~/styles/global.scss'],
+  plugins: [],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/style-resources',
+    [
+      'nuxt-imagemin',
+      {
+        gifsicle: { optimizationLevel: 3 },
+        plugins: [
+          // https://www.npmjs.com/package/imagemin-mozjpeg
+          imageminMozjpeg({
+            // クオリティ 0(やり過ぎ) ~ 100(ほぼそのまま)
+            quality: 80,
+            // プログレッシブjpegを作成するか falseにするとベースラインjpeg
+            progressive: true,
+          }),
+          // https://www.npmjs.com/package/imagemin-pngquant
+          imageminPngquant({
+            // クオリティ 0(やり過ぎ) ~ 100(ほぼそのまま) -で繋いで2つ書くとmin-maxという意味合いらしいがよくわかりません
+            quality: [0.65, 0.8],
+            // 処理速度を指定 1(じっくり) ~ 10(最速) 5％くらい質に違いが出るらしい
+            speed: 1,
+            // ディザリングを設定 0(無効) ~ 1(最大) | false
+            dithering: false,
+          }),
+          // https://github.com/imagemin/imagemin-webp#imagemin-webp-
+          imageminWebp({ quality: 80 }),
+          // imageminGif2Webp({ quality: 80 }),
+        ],
+      },
+    ],
+  ],
+  axios: {},
+  sitemap: {
+    path: './sitemap.xml',
+    hostname: 'https://example.com',
+    cacheTime: 1000 * 60 * 15,
+    // exclude: [],
+    routes: [],
+  },
+  styleResources: {
+    scss: ['~/styles/_variables.scss', '~/styles/_mixins.scss'],
+  },
+  build: {
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': {},
+        'postcss-color-hex-alpha': {},
+        'postcss-calc': {},
+        'postcss-flexbugs-fixes': {},
+        'postcss-url': {},
+      },
+      preset: {
+        autoprefixer: {
+          grid: true,
+        },
+      },
+    },
+    loaders: {
+      scss: {
+        implementation: Sass,
+        fiber: Fibers,
+      },
+    },
+    extend(nuxtConfig, ctx) {
+      // Run ESLint on save
+      if (!ctx.isDev && nuxtConfig.module) {
+        const tsconfigPath = `${process.cwd()}/tsconfig.production.json`;
+
+        const tsRules = nuxtConfig.module.rules
+          .filter(rule => rule.test instanceof RegExp && (rule.test.test('.ts') || rule.test.test('.tsx')))
+          .map(rule => (rule.use as RuleSetLoader[]).filter(use => use.loader === 'ts-loader'))
+          .reduce((tmp, ary) => [...ary, ...tmp], []);
+
+        tsRules.forEach(rule => {
+          if (rule.options) {
+            // eslint-disable-next-line no-param-reassign,dot-notation
+            rule.options['configFile'] = tsconfigPath;
+          }
+        });
+      }
+    },
+  },
+};
+
+export default config;
