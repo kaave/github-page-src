@@ -2,7 +2,7 @@
   <div class="Container">
     <introduction-component v-if="!isLoaded" :is-loaded="isLoaded" :tasks="tasks" @on-finished="onTaskFinished" />
     <header id="header" class="Header" role="banner">Header</header>
-    <main id="main" class="Main" role="main">Main</main>
+    <main id="main" class="Main" role="main" v-html="$md.render(entries[0].entry)"></main>
     <footer id="footer" class="Footer">Footer</footer>
   </div>
 </template>

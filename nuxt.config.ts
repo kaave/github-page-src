@@ -80,6 +80,7 @@ const config: NuxtConfiguration = {
     '@nuxtjs/sitemap',
     '@nuxtjs/style-resources',
     '@nuxtjs/apollo',
+    '@nuxtjs/markdownit',
     [
       'nuxt-imagemin',
       {
@@ -127,6 +128,13 @@ const config: NuxtConfiguration = {
   },
   styleResources: {
     scss: ['~/styles/_variables.scss', '~/styles/_mixins.scss'],
+  },
+  markdownit: {
+    preset: 'default',
+    injected: true,
+    linkify: true,
+    breaks: true,
+    use: ['markdown-it-attrs', 'markdown-it-prism'],
   },
   build: {
     postcss: {
