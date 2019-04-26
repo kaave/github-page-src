@@ -5,14 +5,13 @@ query content {
     publish
     subject
     entry
-    # thumbnail {
-    #   id
-    #   handle
-    #   fileName
-    #   height
-    #   width
-    #   size
-    #   mimeType
-    # }
+    thumbnail {
+      url
+      mimeType
+      fileName
+      width
+      height
+      size
+    }
   }
 }
