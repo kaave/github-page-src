@@ -63,6 +63,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 /* stylelint-disable no-descending-specificity */
 
 .Introduction {
+  z-index: nth($zLevels, 10);
   position: fixed;
   display: flex;
   justify-content: center;
