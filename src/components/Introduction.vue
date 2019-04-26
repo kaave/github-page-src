@@ -1,5 +1,5 @@
 <template>
-  <section class="Introduction">
+  <section class="Introduction" :class="isLoaded ? '-loaded' : ''">
     <div class="Introduction__background" role="presentation">
       <span v-for="i in backgroundSplitCount" :key="i" class="Introduction__background-block" />
     </div>
@@ -10,12 +10,12 @@
 <script lang="ts">
 import Vue from 'vue';
 
-type Data = { dotCount: number; finishedPromises: number; intervalID?: NodeJS.Timeout };
+type Data = { dotCount: number; finishedPromises: number; isLoaded: boolean; intervalID?: NodeJS.Timeout };
 type Methods = {};
 type Computed = { dotString: string; backgroundSplitCount: number };
 type Props = { tasks: Promise<any>[] };
 
-const defaultData: Data = { dotCount: 0, finishedPromises: 0 };
+const defaultData: Data = { dotCount: 0, finishedPromises: 0, isLoaded: false };
 const maxDotCount = 3;
 
 export default Vue.extend<Data, Methods, Computed, Props>({
@@ -37,17 +37,17 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   mounted() {
-    console.log('mounted!');
     if (this.intervalID) return;
-    this.intervalID = setInterval(() => {
-      this.dotCount = (this.dotCount + 1) % (maxDotCount + 1);
-    }, 1000);
+    this.intervalID = setInterval(() => (this.dotCount = (this.dotCount + 1) % (maxDotCount + 1)), 1000);
 
     this.tasks.forEach(promise =>
       promise.then(() => {
         this.finishedPromises += 1;
         if (this.finishedPromises === this.tasks.length) {
-          this.$emit('on-finished');
+          this.isLoaded = true;
+          setTimeout(() => this.$emit('on-finished'), 1000);
+          if (!this.intervalID) return;
+          clearInterval(this.intervalID);
         }
       }),
     );
@@ -69,7 +69,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   align-items: center;
   width: 100%;
   height: 100%;
-  background: #fff;
+  color: $colorBlack;
 }
 
 .Introduction__background {
@@ -91,11 +91,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   display: block;
   width: 100%;
   height: 100%;
-  background: #ccc;
-  transition: transform 600ms $easeInOutQuart;
+  background: $colorWhite;
+  transition: all 600ms $easeInOutQuart;
 }
 
-.-wipe .Introduction__background-block {
+.-loaded .Introduction__background-block {
+  background: $colorBlack;
   transform: translate3d(0, -100%, 0);
 
   @include notSp {
@@ -103,7 +104,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   }
 }
 
-.-wipe .Introduction__background-block:nth-child(2n) {
+.-loaded .Introduction__background-block:nth-child(2n) {
   transform: translate3d(0, 100%, 0);
 
   @include notSp {
@@ -161,5 +162,10 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 .Introduction__inner {
   z-index: 1;
+  transition: all 600ms $easeOutExpo;
+}
+
+.-loaded .Introduction__inner {
+  opacity: 0;
 }
 </style>

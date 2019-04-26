@@ -1,10 +1,8 @@
 /*
  * z-index
  */
-$zLevels: 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000,
-  1000000000;
-$zBehindLevels: -1, -10, -100, -1000, -10000, -100000, -1000000, -10000000,
-  -100000000, -1000000000;
+$zLevels: 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000;
+$zBehindLevels: -1, -10, -100, -1000, -10000, -100000, -1000000, -10000000, -100000000, -1000000000;
 
 /*
  * font
@@ -12,11 +10,9 @@ $zBehindLevels: -1, -10, -100, -1000, -10000, -100000, -1000000, -10000000,
  * http://silight.hatenablog.jp/entry/2015/07/02/214601
  */
 
-$fontFamilyBase: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-  '游ゴシック Medium', YuGothic, YuGothicM, 'Hiragino Kaku Gothic ProN',
-  メイリオ, Meiryo, sans-serif;
-$fontFamilyMincho: Georgia, 游明朝, 'Yu Mincho', YuMincho,
-  'Hiragino Mincho ProN', HGS明朝E, メイリオ, Meiryo, serif;
+$fontFamilyBase: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "游ゴシック Medium", YuGothic, YuGothicM,
+    "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+$fontFamilyMincho: Georgia, 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", HGS明朝E, メイリオ, Meiryo, serif;
 $fontFamilyMono: monospace, serif;
 $fontWeightThin: 100;
 $fontWeightExtraLight: 200;
@@ -65,3 +61,9 @@ $sizeIpadShort: 768px;
 $sizeIpadPro10inchLong: 1112px;
 $sizeIpadPro10inchShort: 834px;
 $sizeModernDesktop: 1024px;
+
+/*
+ * color
+ */
+$colorBlack: #111;
+$colorWhite: #f0f0f0;

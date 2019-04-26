@@ -1,6 +1,6 @@
 <template>
   <div class="Container">
-    <introduction-component :tasks="tasks" @on-finished="onTaskFinished" />
+    <introduction-component v-if="!isLoaded" :is-loaded="isLoaded" :tasks="tasks" @on-finished="onTaskFinished" />
     <header id="header" class="Header" role="banner">Header</header>
     <main id="main" class="Main" role="main">Main</main>
     <footer id="footer" class="Footer">Footer</footer>
@@ -21,13 +21,20 @@ type Entry = {
   entry: string;
 };
 
-type Data = { tasks: Promise<any>[]; entries: Entry[] };
+type Data = {
+  tasks: Promise<any>[];
+  entries: Entry[];
+  isLoaded: boolean;
+};
 type Methods = {};
 type Computed = {};
 type Props = {};
 
 const tasks = [...Array(5).keys()].map(i => new Promise(resolve => setTimeout(resolve, i * 500)));
-const defaultData: Data = { tasks, entries: [] };
+if (typeof window !== 'undefined') {
+  tasks.push(new Promise(resolve => window.addEventListener('load', resolve)));
+}
+const defaultData: Data = { tasks, entries: [], isLoaded: false };
 const components = { IntroductionComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
@@ -40,7 +47,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   methods: {
     onTaskFinished() {
-      console.log('finished');
+      this.isLoaded = true;
     },
   },
   apollo: {
