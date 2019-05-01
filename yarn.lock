@@ -1313,6 +1313,11 @@
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
   integrity sha1-PDSD5gbAQTeEOOlRRk8A5OYHBtY=
 
+"@types/linkify-it@*":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-2.1.0.tgz#ea3dd64c4805597311790b61e872cbd1ed2cd806"
+  integrity sha512-Q7DYAOi9O/+cLLhdaSvKdaumWyHbm7HAk/bFwwyTuU0arR5yyCeW5GOoqt4tJTpDRxhpx9Q8kQL6vMpuw9hDSw==
+
 "@types/loglevel@*":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@types/loglevel/-/loglevel-1.5.4.tgz#6e296bf20d9f6b0a3274cfb01a918f1d634e4c32"
@@ -1322,6 +1327,13 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.0.tgz#719551d2352d301ac8b81db732acb6bdc28dbdef"
   integrity sha512-1w52Nyx4Gq47uuu0EVcsHBxZFJgurQ+rTKS3qMHxR1GY2T8c2AJYd6vZoZ9q1rupaDjU0yT+Jc2XTyXkjeMA+Q==
+
+"@types/markdown-it@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-0.0.7.tgz#75070485a3d8ad11e7deb8287f4430be15bf4d39"
+  integrity sha512-WyL6pa76ollQFQNEaLVa41ZUUvDvPY+qAUmlsphnrpL6I9p1m868b26FyeoOmo7X3/Ta/S9WKXcEYXUSHnxoVQ==
+  dependencies:
+    "@types/linkify-it" "*"
 
 "@types/memory-fs@*":
   version "0.3.2"
@@ -5419,7 +5431,7 @@ graphql-subscriptions@^1.0.0:
   dependencies:
     iterall "^1.2.1"
 
-graphql-tag@^2.0.0, graphql-tag@^2.10.1, graphql-tag@^2.9.2:
+graphql-tag@^2.0.0, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
