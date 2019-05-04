@@ -1,7 +1,7 @@
 <template>
-  <section class="Introduction" :class="isLoaded ? '-loaded' : ''">
+  <section class="Introduction">
     <div class="Introduction__background" role="presentation">
-      <span v-for="i in backgroundSplitCount" :key="i" class="Introduction__background-block" />
+      <span v-for="i in backgroundSplitCount" :key="i" ref="block" class="Introduction__background-block" />
     </div>
     <div class="Introduction__inner">Loading{{ dotString }}</div>
   </section>
@@ -9,13 +9,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { TweenLite, Power3 as Quart } from 'gsap';
 
-type Data = { dotCount: number; finishedPromises: number; isLoaded: boolean; intervalID?: NodeJS.Timeout };
+type Data = { dotCount: number; finishedPromises: number; intervalID?: NodeJS.Timeout };
 type Methods = {};
 type Computed = { dotString: string; backgroundSplitCount: number };
 type Props = { tasks: Promise<any>[] };
 
-const defaultData: Data = { dotCount: 0, finishedPromises: 0, isLoaded: false };
+const defaultData: Data = { dotCount: 0, finishedPromises: 0 };
 const maxDotCount = 3;
 
 export default Vue.extend<Data, Methods, Computed, Props>({
@@ -40,11 +41,31 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     if (this.intervalID) return;
     this.intervalID = setInterval(() => (this.dotCount = (this.dotCount + 1) % (maxDotCount + 1)), 1000);
 
+    const transforms = this.$isMobile()
+      ? ['translate3d(0, -100%, 0)', 'translate3d(0, 100%, 0)']
+      : ['translate3d(-100% , 0,0)', 'translate3d(100%, 0, 0)'];
     this.tasks.forEach(promise =>
       promise.then(() => {
         this.finishedPromises += 1;
         if (this.finishedPromises === this.tasks.length) {
-          this.isLoaded = true;
+          const blocks = this.$refs.block as HTMLElement[];
+          blocks.forEach((block, i) =>
+            setTimeout(() => {
+              TweenLite.fromTo(
+                block,
+                0.6,
+                {
+                  backgroundColor: '#f0f0f0',
+                  transform: `translate3d(0, 0, 0)`,
+                },
+                {
+                  backgroundColor: '#111',
+                  transform: transforms[i % 2],
+                  ease: Quart.easeInOut,
+                },
+              );
+            }, Math.floor(Math.random() * 150)),
+          );
           setTimeout(() => this.$emit('on-finished'), 1000);
           if (!this.intervalID) return;
           clearInterval(this.intervalID);
@@ -93,72 +114,138 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   width: 100%;
   height: 100%;
   background: $colorWhite;
-  transition: all 600ms $easeInOutQuart;
-}
-
-.-loaded .Introduction__background-block {
-  background: $colorBlack;
-  transform: translate3d(0, -100%, 0);
-
-  @include notSp {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-.-loaded .Introduction__background-block:nth-child(2n) {
-  transform: translate3d(0, 100%, 0);
-
-  @include notSp {
-    transform: translate3d(100%, 0, 0);
-  }
 }
 
 .Introduction__background-block:first-child {
-  border-color: transparent;
+  $block-size: 12%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(2) {
-  transition-delay: 90ms;
+  $block-size: 12%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(3) {
-  transition-delay: 110ms;
+  $block-size: 2%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(4) {
-  transition-delay: 180ms;
+  $block-size: 1%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(5) {
-  transition-delay: 140ms;
+  $block-size: 9%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(6) {
-  transition-delay: 190ms;
+  $block-size: 22%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(7) {
-  transition-delay: 200ms;
+  $block-size: 2%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(8) {
-  transition-delay: 120ms;
+  $block-size: 8%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(9) {
-  transition-delay: 70ms;
+  $block-size: 12%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(10) {
-  transition-delay: 80ms;
+  $block-size: 4%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:nth-child(11) {
-  transition-delay: 160ms;
+  $block-size: 3%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__background-block:last-child {
-  transition-delay: 40ms;
+  $block-size: 15%;
+
+  width: $block-size;
+
+  @include notSp {
+    width: 100%;
+    height: $block-size;
+  }
 }
 
 .Introduction__inner {

@@ -73,7 +73,7 @@ const config: NuxtConfiguration = {
   },
   loading: { color: '#fff' },
   css: ['sanitize.css', '~/styles/global.scss'],
-  plugins: ['~/plugins/tweenmax.ts'],
+  plugins: ['~/plugins/isMobile.ts'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
