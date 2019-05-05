@@ -1,7 +1,7 @@
 <template>
   <div>
-    <header id="header" class="Header" role="banner">Header</header>
-    <main id="main" class="Main" role="main" v-html="parsedEntries"></main>
+    <navigation-component />
+    <main id="main" class="Main" role="main" hidden v-html="parsedEntries"></main>
     <footer id="footer" class="Footer">
       <button @click="clickClick">click!</button>
     </footer>
@@ -15,6 +15,7 @@ import { mapGetters, mapMutations, MutationMethod } from 'vuex';
 import { MutationKeys } from '../store';
 import EntriesQuery from '../apollo/query/entries.gql';
 import { Entry, EntryJson } from '../value-objects/Entry';
+import NavigationComponent from './Navigation/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
 
@@ -25,7 +26,10 @@ type Props = {};
 
 const defaultData: Data = { entries: [] };
 
+const components = { NavigationComponent };
+
 export default Vue.extend<Data, Methods, Computed, Props>({
+  components,
   data() {
     return { ...defaultData };
   },

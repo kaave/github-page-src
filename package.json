@@ -48,6 +48,7 @@
         "cross-env": "^5.2.0",
         "dotenv": "^7.0.0",
         "gsap": "^2.1.2",
+        "lodash": "^4.17.11",
         "markdown-it-attrs": "^2.3.3",
         "markdown-it-prism": "^2.0.1",
         "nuxt": "^2.3.4",
