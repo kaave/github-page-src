@@ -1,17 +1,21 @@
+<!-- eslint-disable -->
 <template>
   <div class="Container">
     <introduction-component v-if="!isLoaded" :is-loaded="isLoaded" :tasks="tasks" @on-finished="onTaskFinished" />
+    <background-component />
     <transition name="main-entry" :duration="2000">
       <main-component v-if="isLoaded" />
     </transition>
   </div>
 </template>
+<!-- eslint-enable -->
 
 <script lang="ts">
 import Vue from 'vue';
 
 import IntroductionComponent from '~/components/Introduction.vue';
 import MainComponent from '~/components/Main.vue';
+import BackgroundComponent from '~/components/Background/Index.vue';
 
 type Data = {
   tasks: Promise<any>[];
@@ -26,7 +30,7 @@ if (typeof window !== 'undefined') {
   tasks.push(new Promise(resolve => window.addEventListener('load', resolve)));
 }
 const defaultData: Data = { tasks, isLoaded: false };
-const components = { IntroductionComponent, MainComponent };
+const components = { IntroductionComponent, MainComponent, BackgroundComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
