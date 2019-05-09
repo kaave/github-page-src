@@ -53,6 +53,7 @@
         "markdown-it-attrs": "^2.3.4",
         "markdown-it-prism": "^2.0.1",
         "nuxt": "^2.6.3",
+        "nuxt-webfontloader": "^1.0.0",
         "sanitize.css": "^8.0.0",
         "ts-node": "^8.1.0",
         "tslib": "^1.9.3"

@@ -79,6 +79,7 @@ const config: NuxtConfiguration = {
     '@nuxtjs/dotenv',
     '@nuxtjs/sitemap',
     '@nuxtjs/style-resources',
+    'nuxt-webfontloader',
     '@nuxtjs/apollo',
     '@nuxtjs/markdownit',
     [
@@ -135,6 +136,11 @@ const config: NuxtConfiguration = {
     linkify: true,
     breaks: true,
     use: ['markdown-it-attrs', 'markdown-it-prism'],
+  },
+  webfontloader: {
+    google: {
+      families: ['Crimson+Text:400,700'], // set your favorite fonts
+    },
   },
   build: {
     postcss: {
