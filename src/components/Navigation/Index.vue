@@ -7,7 +7,7 @@
     <transition name="sp-menu" :duration="600" mode="out-in">
       <sp-modal-menu v-if="isShowSpMenu" :menus="menus" :snses="snses" />
     </transition>
-    <div class="Navigation__content -hidden-sp"></div>
+    <pc-menu class="-hidden-sp" :menus="menus" :snses="snses" />
   </nav>
 </template>
 <!-- eslint-enable -->
@@ -18,6 +18,7 @@ import throttle from 'lodash/throttle';
 
 import Hamburger from './Hamburger.vue';
 import SpModalMenu from './SpModalMenu.vue';
+import PcMenu from './PcMenu.vue';
 
 type Data = { isShowSpMenu: boolean };
 type Methods = { handleHambergerClick: () => void };
@@ -26,7 +27,7 @@ type Props = {};
 
 const defaultData: Data = { isShowSpMenu: false };
 
-const components = { Hamburger, SpModalMenu };
+const components = { Hamburger, SpModalMenu, PcMenu };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -64,10 +65,31 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   left: 0;
   width: 100%;
   padding: 4vw;
+
+  @include notSp {
+    padding: 0;
+  }
 }
 
-.Navigation__content {
-  display: flex;
-  justify-content: flex-end;
+@include sp {
+  .Navigation__content {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.Navigation__inner {
+  width: 100%;
+  max-width: $maxWidth;
+  padding: $horizontalPadding;
+  margin: auto;
+}
+
+.Navigation__header {
+  font-size: 2.72vw;
+
+  @include maxSize {
+    font-size: 3.2rem;
+  }
 }
 </style>

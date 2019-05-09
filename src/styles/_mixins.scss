@@ -12,3 +12,13 @@
         @content;
     }
 }
+
+@mixin maxSize {
+    @media (min-width: ($maxWidth)) {
+        @content;
+    }
+}
+
+@mixin responsiveFontSize($font-size) {
+    font-size: #{$font-size / 1.6 * 1.53} + vw;
+}
