@@ -111,7 +111,7 @@ type Data = {
   carouselHeight: number;
   carouselTransform: string;
 };
-type Methods = {};
+type Methods = { fitCanvas: () => void };
 type Computed = {
   imageUrls: string[];
   easing: Ease;
@@ -154,27 +154,28 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   mounted() {
     setInterval(() => (this.index = (this.index + 1) % this.imageUrls.length), 3000);
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        const horizontalRate = 16;
-        const verticalRate = 9;
-        const rulerRate = horizontalRate / verticalRate;
-        const currentRate = window.innerWidth / window.innerHeight;
+    window.addEventListener('resize', debounce(this.fitCanvas.bind(this), 200));
+    this.fitCanvas();
+  },
+  methods: {
+    fitCanvas() {
+      const horizontalRate = 16;
+      const verticalRate = 9;
+      const rulerRate = horizontalRate / verticalRate;
+      const currentRate = window.innerWidth / window.innerHeight;
 
-        if (rulerRate > currentRate) {
-          // 縦を合わせて、transformXで中央に持ってくる
-          this.carouselWidth = (window.innerHeight * horizontalRate) / verticalRate;
-          this.carouselHeight = window.innerHeight;
-          this.carouselTransform = `translateX(-${(this.carouselWidth - window.innerWidth) / 2}px)`;
-        } else {
-          // 横を合わせて、transformYで中央に持ってくる
-          this.carouselWidth = window.innerWidth;
-          this.carouselHeight = (window.innerWidth * verticalRate) / horizontalRate;
-          this.carouselTransform = `translateY(-${(this.carouselHeight - window.innerHeight) / 2}px)`;
-        }
-      }, 200),
-    );
+      if (rulerRate > currentRate) {
+        // 縦を合わせて、transformXで中央に持ってくる
+        this.carouselWidth = (window.innerHeight * horizontalRate) / verticalRate;
+        this.carouselHeight = window.innerHeight;
+        this.carouselTransform = `translateX(-${(this.carouselWidth - window.innerWidth) / 2}px)`;
+      } else {
+        // 横を合わせて、transformYで中央に持ってくる
+        this.carouselWidth = window.innerWidth;
+        this.carouselHeight = (window.innerWidth * verticalRate) / horizontalRate;
+        this.carouselTransform = `translateY(-${(this.carouselHeight - window.innerHeight) / 2}px)`;
+      }
+    },
   },
 });
 </script>
