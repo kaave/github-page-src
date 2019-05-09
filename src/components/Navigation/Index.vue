@@ -59,6 +59,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 <style lang="scss" scoped>
 .Navigation {
+  z-index: nth($zLevels, 8);
   position: fixed;
   display: block;
   top: 0;

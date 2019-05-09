@@ -87,7 +87,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 .SpModalMenu__background-block {
   display: block;
-  background: rgba($colorWhite, 0.8);
+  background: rgba($colorWhite, 0.9);
   margin: auto auto auto 0;
 }
 

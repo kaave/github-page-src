@@ -1,12 +1,22 @@
+<!-- eslint-disable -->
 <template>
   <div>
     <navigation-component />
-    <main id="main" class="Main" role="main" hidden v-html="parsedEntries"></main>
-    <footer id="footer" class="Footer">
-      <button @click="clickClick">click!</button>
-    </footer>
+    <main id="main" class="Main" role="main">
+      <top-component />
+      <about-component />
+    </main>
+    <footer-component />
   </div>
 </template>
+<!-- eslint-enable -->
+
+<style lang="scss" scoped>
+.Main {
+  z-index: 1;
+  position: relative;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue';
@@ -16,6 +26,9 @@ import { MutationKeys } from '../store';
 import EntriesQuery from '../apollo/query/entries.gql';
 import { Entry, EntryJson } from '../value-objects/Entry';
 import NavigationComponent from './Navigation/Index.vue';
+import TopComponent from './Top/Index.vue';
+import AboutComponent from './About/Index.vue';
+import FooterComponent from './Footer/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
 
@@ -26,7 +39,7 @@ type Props = {};
 
 const defaultData: Data = { entries: [] };
 
-const components = { NavigationComponent };
+const components = { NavigationComponent, TopComponent, AboutComponent, FooterComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
