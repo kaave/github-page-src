@@ -1,9 +1,14 @@
+import Vue from 'vue';
+
+import { ThumbnailJson, Thumbnail } from './Thumbnail';
+
 export type EntryJson = {
   status: string;
   id: string;
   publish: string;
   subject: string;
   entry: string;
+  thumbnail: ThumbnailJson;
 };
 
 export type Entry = {
@@ -11,5 +16,6 @@ export type Entry = {
   id: string;
   publish: Date;
   subject: string;
-  entry: string;
+  entryHtml: string;
+  thumbnail: Thumbnail;
 };

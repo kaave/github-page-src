@@ -4,7 +4,10 @@
     <navigation-component />
     <main id="main" class="Main" role="main">
       <top-component />
+      <hr class="SectionBreak" />
       <about-component />
+      <hr class="SectionBreak" />
+      <entries-component :entries="parsedEntries" />
     </main>
     <footer-component />
   </div>
@@ -15,6 +18,15 @@
 .Main {
   z-index: 1;
   position: relative;
+}
+
+.SectionBreak {
+  border: 0;
+  padding: 0;
+  margin: 15vh auto;
+  width: 30vw;
+  height: 1px;
+  background: rgba($colorWhite, 0.8);
 }
 </style>
 
@@ -28,6 +40,7 @@ import { Entry, EntryJson } from '../value-objects/Entry';
 import NavigationComponent from './Navigation/Index.vue';
 import TopComponent from './Top/Index.vue';
 import AboutComponent from './About/Index.vue';
+import EntriesComponent from './Entries/Index.vue';
 import FooterComponent from './Footer/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
@@ -39,7 +52,7 @@ type Props = {};
 
 const defaultData: Data = { entries: [] };
 
-const components = { NavigationComponent, TopComponent, AboutComponent, FooterComponent };
+const components = { NavigationComponent, TopComponent, AboutComponent, EntriesComponent, FooterComponent };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -51,7 +64,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       return this.entries.map<Entry>(src => ({
         ...src,
         publish: new Date(src.publish),
-        entry: this.$md.render(src.entry),
+        entryHtml: this.$md.render(src.entry),
       }));
     },
     ...vuexGetters,
@@ -67,6 +80,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   apollo: {
     entries: {
       query: EntriesQuery,
+      variables: {
+        orderBy: 'publish_DESC',
+      },
     },
   },
 });

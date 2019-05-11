@@ -1,5 +1,5 @@
-query content {
-  entries {
+query content($orderBy: EntryOrderByInput) {
+  entries(orderBy: $orderBy) {
     status
     id
     publish

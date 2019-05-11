@@ -2,7 +2,7 @@
 <template>
   <section class="About">
     <div class="About__inner">
-      <h2 class="About__header">About</h2>
+      <h2 class="About__header">about</h2>
       <p class="About__text">
         名古屋在住のWebエンジニアによる一応ブログメインのサイトです。
         メモ、実験、音楽ネタ、料理ネタ、自転車ネタやらでまわしてます。
@@ -40,6 +40,31 @@
 .About__text {
   font-size: 3.75vw;
   line-height: 1.8;
+}
+
+.About__link {
+  position: relative;
+  display: inline-block;
+  margin-top: 1em;
+  font-size: 4.286vw;
+  color: currentColor;
+
+  &,
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+
+  &::after {
+    content: '';
+    z-index: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: rgba($colorWhite, 0.6);
+  }
 }
 </style>
 

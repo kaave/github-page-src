@@ -7,6 +7,7 @@ import Sass from 'sass';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
 import imageminWebp from 'imagemin-webp';
+import { createContext } from 'vm';
 // import imageminGif2Webp from 'imagemin-gif2webp';
 
 Dotenv.config();
@@ -179,6 +180,11 @@ const config: NuxtConfiguration = {
             rule.options['configFile'] = tsconfigPath;
           }
         });
+      }
+
+      if (ctx.isDev && ctx.isClient) {
+        // eslint-disable-next-line no-param-reassign
+        nuxtConfig.devtool = 'inline-source-map';
       }
     },
   },
