@@ -188,6 +188,7 @@ const config: NuxtConfiguration = {
       }
     },
   },
+  server: { host, port },
 };
 
 export default config;

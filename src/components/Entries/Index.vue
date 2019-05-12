@@ -34,6 +34,12 @@
   width: 100%;
   height: 100%;
   padding: 0 4vw;
+
+  @include notSp {
+    max-width: $maxWidth;
+    padding: 0 $horizontalPadding;
+    margin: auto;
+  }
 }
 
 .Entries__header {
@@ -41,11 +47,31 @@
   line-height: 1;
   letter-spacing: 0.05em;
   margin-bottom: 0.5em;
+
+  $pc-font-size: 4;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+    margin-bottom: 1.5em;
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Entries__text {
   font-size: 3.75vw;
   line-height: 1.8;
+
+  $pc-font-size: 1.6;
+  @include notSp {
+    line-height: 1.6;
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Entries__link {
@@ -54,6 +80,16 @@
   margin-top: 1em;
   font-size: 4.286vw;
   color: currentColor;
+
+  $pc-font-size: 1.8;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+    margin-top: 3em;
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 
   &,
   &:hover,
@@ -75,14 +111,32 @@
 
 .Entries__list {
   width: 100%;
+
+  @include notSp {
+    display: grid;
+    grid-template:
+      'cell1 cell2 cell3' auto /
+      1fr 1fr 1fr;
+    gap: 3%;
+  }
 }
 
 .Entries__cell {
   line-height: 1.8;
 }
 
-.Entries__cell:not(:first-child) {
-  margin-top: 1em;
+@include sp {
+  .Entries__cell:not(:first-child) {
+    margin-top: 1em;
+  }
+}
+
+@include notSp {
+  @for $i from 1 through 3 {
+    .Entries__cell:nth-child(#{$i}) {
+      grid-area: cells + $i;
+    }
+  }
 }
 
 .Entries__show {
@@ -99,6 +153,15 @@
   &:active {
     text-decoration: none;
   }
+
+  @include notSp {
+    height: 100%;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 0 0 2px #fff;
+    }
+  }
 }
 
 .Entries__show-inner {
@@ -110,6 +173,11 @@
   padding: 0 1vw;
   width: 100%;
   background-color: #0008;
+
+  @include notSp {
+    padding: 1.2em 1.5em;
+    height: 100%;
+  }
 }
 
 .Entries__date {
@@ -118,11 +186,31 @@
   font-size: 3.75vw;
   padding: 0.5em 0;
   line-height: 1;
+
+  $pc-font-size: 2;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+    padding-top: 0;
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Entries__subject {
   grid-area: Entries__subject;
   width: 100%;
+
+  $pc-font-size: 2.4;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+    line-height: 1.6;
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 </style>
 

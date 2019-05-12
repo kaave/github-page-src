@@ -28,6 +28,12 @@
   width: 100%;
   height: 100%;
   padding: 0 4vw;
+
+  @include notSp {
+    max-width: $maxWidth;
+    padding: 0 $horizontalPadding;
+    margin: auto;
+  }
 }
 
 .About__header {
@@ -35,11 +41,30 @@
   line-height: 1;
   letter-spacing: 0.05em;
   margin-bottom: 0.5em;
+
+  $pc-font-size: 4;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+    margin-bottom: 1.5em;
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .About__text {
   font-size: 3.75vw;
   line-height: 1.8;
+
+  $pc-font-size: 1.6;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .About__link {
@@ -48,6 +73,15 @@
   margin-top: 1em;
   font-size: 4.286vw;
   color: currentColor;
+
+  $pc-font-size: 1.8;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 
   &,
   &:hover,

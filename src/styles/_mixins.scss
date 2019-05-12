@@ -20,5 +20,5 @@
 }
 
 @mixin responsiveFontSize($font-size) {
-    font-size: #{$font-size / 1.6 * 1.53} + vw;
+    font-size: #{$font-size / 6 * 5.772} + vw;
 }

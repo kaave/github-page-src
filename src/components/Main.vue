@@ -8,6 +8,8 @@
       <about-component />
       <hr class="SectionBreak" />
       <entries-component :entries="parsedEntries" />
+      <hr class="SectionBreak" />
+      <credits-component />
     </main>
     <footer-component />
   </div>
@@ -27,6 +29,10 @@
   width: 30vw;
   height: 1px;
   background: rgba($colorWhite, 0.8);
+
+  @include notSp {
+    max-width: 200px;
+  }
 }
 </style>
 
@@ -41,6 +47,7 @@ import NavigationComponent from './Navigation/Index.vue';
 import TopComponent from './Top/Index.vue';
 import AboutComponent from './About/Index.vue';
 import EntriesComponent from './Entries/Index.vue';
+import CreditsComponent from './Credits/Index.vue';
 import FooterComponent from './Footer/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
@@ -52,7 +59,14 @@ type Props = {};
 
 const defaultData: Data = { entries: [] };
 
-const components = { NavigationComponent, TopComponent, AboutComponent, EntriesComponent, FooterComponent };
+const components = {
+  NavigationComponent,
+  TopComponent,
+  AboutComponent,
+  EntriesComponent,
+  CreditsComponent,
+  FooterComponent,
+};
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
