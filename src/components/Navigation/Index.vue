@@ -6,28 +6,9 @@
       <hamburger @click="handleHambergerClick" :is-close="isShowSpMenu" />
     </div>
     <transition name="sp-menu" :duration="600">
-      <aside v-if="isShowSpMenu" class="Navigation__sp-modal-menu">
-        <ul class="Navigation__sp-menu">
-          <li v-for="menu in menus" :key="menu" class="Navigation__sp-menu-cell">
-            <nuxt-link :to="`/${menu}`" class="Navigation__sp-menu-link">{{ menu }}</nuxt-link>
-          </li>
-        </ul>
-        <ul class="Navigation__sp-sns">
-          <li v-for="{ key, url } in sns" :key="key" class="Navigation__sp-sns-cell">
-            <a :href="url" class="Navigation__sp-sns-link" target="_blank" rel="noopener">
-              <component :is="`icon-${key}`" class="Navigation__sp-sns-icon" />
-            </a>
-          </li>
-        </ul>
-      </aside>
+      <sp-modal-menu v-if="isShowSpMenu" :menus="menus" :snses="snses" />
     </transition>
-    <div class="Navigation__content -hidden-sp">
-      <ul class="Navigation__pc-menu">
-        <li v-for="menu in menus" :key="menu" class="Navigation__pc-menu-cell">
-          <nuxt-link :to="`/${menu}`" class="Navigation__pc-menu-link">{{ menu }}</nuxt-link>
-        </li>
-      </ul>
-    </div>
+    <pc-menu :menus="menus" :snses="snses" />
   </nav>
   <!-- eslint-enable -->
 </template>
@@ -37,10 +18,9 @@
 import Vue from 'vue';
 import throttle from 'lodash/throttle';
 
-import IconFacebook from '../Icon/Facebook.vue';
-import IconTwitter from '../Icon/Twitter.vue';
-import IconGithub from '../Icon/GitHub.vue';
-import IconWantedly from '../Icon/Wantedly.vue';
+import Hamburger from './Hamburger.vue';
+import SpModalMenu from './SpModalMenu.vue';
+import PcMenu from './PcMenu.vue';
 
 type Data = { isShowSpMenu: boolean; isInitialize: boolean };
 type Methods = { handleHambergerClick: () => void };
@@ -49,7 +29,7 @@ type Props = {};
 
 const defaultData: Data = { isShowSpMenu: false, isInitialize: false };
 
-const components = { IconFacebook, IconTwitter, IconGithub, IconWantedly };
+const components = { Hamburger, SpModalMenu, PcMenu };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -84,6 +64,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 <style lang="scss" scoped>
 .Navigation {
   @include sp {
+    z-index: nth($zLevels, 8);
     position: fixed;
     display: block;
     top: 0;
@@ -96,7 +77,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 .Navigation__content.-hidden-pc {
   display: flex;
   justify-content: flex-end;
-}
 
   @include notSp {
     padding: 0;
