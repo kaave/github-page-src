@@ -134,7 +134,7 @@
 @include notSp {
   @for $i from 1 through 3 {
     .Entries__cell:nth-child(#{$i}) {
-      grid-area: cells + $i;
+      grid-area: cell + $i;
     }
   }
 }
