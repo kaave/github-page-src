@@ -1,7 +1,10 @@
 <!-- eslint-disable -->
 <template>
-  <section class="Entries">
-    <div class="Entries__inner">
+  <section
+    class="Entries"
+    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+  >
+    <div class="Entries__inner" :class="getVisibilityClass">
       <h2 class="Entries__header">recent entries</h2>
       <ol class="Entries__list">
         <li v-for="{ status, id, publish, subject, thumbnail } in entries.slice(0, 3)" :key="id" class="Entries__cell">
@@ -43,10 +46,12 @@
 }
 
 .Entries__header {
+  width: 100%;
   font-size: 7.5vw;
   line-height: 1;
-  letter-spacing: 0.05em;
   margin-bottom: 0.5em;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 
   $pc-font-size: 4;
   @include notSp {
@@ -59,9 +64,16 @@
   }
 }
 
+.-visible .Entries__header {
+  opacity: 1;
+  animation: show-header 1.2s $easeOutExpo forwards;
+}
+
 .Entries__text {
   font-size: 3.75vw;
   line-height: 1.8;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.6;
   @include notSp {
@@ -74,12 +86,18 @@
   }
 }
 
+.-visible .Entries__text {
+  opacity: 1;
+}
+
 .Entries__link {
   position: relative;
   display: inline-block;
   margin-top: 1em;
   font-size: 4.286vw;
   color: currentColor;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.8;
   @include notSp {
@@ -110,6 +128,10 @@
   }
 }
 
+.-visible .Entries__link {
+  opacity: 1;
+}
+
 .Entries__link:hover::after {
   background-color: rgba($colorWhite, 0.9);
 }
@@ -128,6 +150,12 @@
 
 .Entries__cell {
   line-height: 1.8;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.-visible .Entries__cell {
+  opacity: 1;
 }
 
 @include sp {
@@ -136,9 +164,11 @@
   }
 }
 
-@include notSp {
-  @for $i from 1 through 3 {
-    .Entries__cell:nth-child(#{$i}) {
+@for $i from 1 through 3 {
+  .Entries__cell:nth-child(#{$i}) {
+    transition-delay: 400ms + $i * 50;
+
+    @include notSp {
       grid-area: cell + $i;
     }
   }
@@ -226,12 +256,16 @@ import dateFormat from 'date-fns/format';
 import { Entry } from '~/value-objects/Entry';
 import { Thumbnail } from '~/value-objects/Thumbnail';
 
-type Data = {};
-type Methods = { getDateString(date: Date): string; getCellStyle(thumbnail?: Thumbnail): { backgroundImage?: string } };
-type Computed = {};
+type Data = { isVisible: boolean };
+type Methods = {
+  getDateString(date: Date): string;
+  getCellStyle(thumbnail?: Thumbnail): { backgroundImage?: string };
+  visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
+};
+type Computed = { getVisibilityClass: string };
 type Props = { entries: Entry[] };
 
-const defaultData: Data = {};
+const defaultData: Data = { isVisible: false };
 
 const components = {};
 
@@ -246,6 +280,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return { ...defaultData };
   },
+  computed: {
+    getVisibilityClass() {
+      return this.isVisible ? '-visible' : '';
+    },
+  },
   methods: {
     getDateString(date: Date): string {
       return dateFormat(date, 'MMM, D YYYY');
@@ -254,6 +293,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       if (!thumbnail) return {};
 
       return { backgroundImage: `url('${thumbnail.url}')` };
+    },
+    visibilityChanged(isVisible, entry) {
+      if (!isVisible) return;
+
+      this.isVisible = true;
     },
   },
 });

@@ -1,7 +1,10 @@
 <!-- eslint-disable -->
 <template>
-  <section class="LTs">
-    <div class="LTs__inner">
+  <section
+    class="LTs"
+    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+  >
+    <div class="LTs__inner" :class="getVisibilityClass">
       <h2 class="LTs__header">recent lts</h2>
       <ol class="LTs__list">
         <li v-for="{ date, eventName, title, link } in lts.slice(0, 3)" :key="eventName + title" class="LTs__cell">
@@ -43,10 +46,12 @@
 }
 
 .LTs__header {
+  width: 100%;
   font-size: 7.5vw;
   line-height: 1;
-  letter-spacing: 0.05em;
   margin-bottom: 0.5em;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 
   $pc-font-size: 4;
   @include notSp {
@@ -59,9 +64,16 @@
   }
 }
 
+.-visible .LTs__header {
+  opacity: 1;
+  animation: show-header 1.2s $easeOutExpo forwards;
+}
+
 .LTs__text {
   font-size: 3.75vw;
   line-height: 1.8;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.6;
   @include notSp {
@@ -74,12 +86,18 @@
   }
 }
 
+.-visible .LTs__text {
+  opacity: 1;
+}
+
 .LTs__link {
   position: relative;
   display: inline-block;
   margin-top: 1em;
   font-size: 4.286vw;
   color: currentColor;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.8;
   @include notSp {
@@ -110,6 +128,10 @@
   }
 }
 
+.-visible .LTs__link {
+  opacity: 1;
+}
+
 .LTs__link:hover::after {
   background-color: rgba($colorWhite, 0.9);
 }
@@ -128,6 +150,12 @@
 
 .LTs__cell {
   line-height: 1.8;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.-visible .LTs__cell {
+  opacity: 1;
 }
 
 @include sp {
@@ -136,9 +164,11 @@
   }
 }
 
-@include notSp {
-  @for $i from 1 through 3 {
-    .LTs__cell:nth-child(#{$i}) {
+@for $i from 1 through 3 {
+  .LTs__cell:nth-child(#{$i}) {
+    transition-delay: 400ms + $i * 50;
+
+    @include notSp {
       grid-area: cell + $i;
     }
   }
@@ -225,12 +255,15 @@ import dateFormat from 'date-fns/format';
 
 import { LT } from '~/value-objects/LT';
 
-type Data = {};
-type Methods = { getDateString(date: Date): string };
-type Computed = {};
+type Data = { isVisible: boolean };
+type Methods = {
+  getDateString(date: Date): string;
+  visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
+};
+type Computed = { getVisibilityClass: string };
 type Props = { lts: LT[] };
 
-const defaultData: Data = {};
+const defaultData: Data = { isVisible: false };
 
 const components = {};
 
@@ -242,9 +275,19 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return { ...defaultData };
   },
+  computed: {
+    getVisibilityClass() {
+      return this.isVisible ? '-visible' : '';
+    },
+  },
   methods: {
     getDateString(date: Date): string {
       return dateFormat(date, 'MMM, D YYYY');
+    },
+    visibilityChanged(isVisible, entry) {
+      if (!isVisible) return;
+
+      this.isVisible = true;
     },
   },
 });

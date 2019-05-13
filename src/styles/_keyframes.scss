@@ -1,0 +1,12 @@
+@keyframes show-header {
+    from,
+    30% {
+        will-change: letter-spacing, opacity;
+        letter-spacing: -0.4em;
+    }
+
+    to {
+        will-change: letter-spacing, opacity;
+        letter-spacing: 0.05em;
+    }
+}

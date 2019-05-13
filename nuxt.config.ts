@@ -74,7 +74,7 @@ const config: NuxtConfiguration = {
   },
   loading: { color: '#fff' },
   css: ['sanitize.css', '~/styles/global.scss'],
-  plugins: ['~/plugins/isMobile.ts'],
+  plugins: ['~/plugins/isMobile.ts', '~/plugins/observeVisibility.ts'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',

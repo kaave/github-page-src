@@ -1,7 +1,10 @@
 <!-- eslint-disable -->
 <template>
-  <section class="About">
-    <div class="About__inner">
+  <section
+    class="About"
+    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+  >
+    <div class="About__inner" :class="getVisibilityClass">
       <h2 class="About__header">about</h2>
       <p class="About__text">
         名古屋在住のWebエンジニアによる一応ブログメインのサイトです。
@@ -37,10 +40,12 @@
 }
 
 .About__header {
+  width: 100%;
   font-size: 7.5vw;
   line-height: 1;
-  letter-spacing: 0.05em;
   margin-bottom: 0.5em;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 
   $pc-font-size: 4;
   @include notSp {
@@ -53,9 +58,16 @@
   }
 }
 
+.-visible .About__header {
+  opacity: 1;
+  animation: show-header 1.2s $easeOutExpo forwards;
+}
+
 .About__text {
   font-size: 3.75vw;
   line-height: 1.8;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.6;
   @include notSp {
@@ -67,12 +79,18 @@
   }
 }
 
+.-visible .About__text {
+  opacity: 1;
+}
+
 .About__link {
   position: relative;
   display: inline-block;
   margin-top: 1em;
   font-size: 4.286vw;
   color: currentColor;
+  opacity: 0;
+  transition: opacity 300ms 400ms ease-out;
 
   $pc-font-size: 1.8;
   @include notSp {
@@ -102,6 +120,10 @@
   }
 }
 
+.-visible .About__link {
+  opacity: 1;
+}
+
 .About__link:hover::after {
   background-color: rgba($colorWhite, 0.9);
 }
@@ -110,12 +132,12 @@
 <script lang="ts">
 import Vue from 'vue';
 
-type Data = {};
-type Methods = {};
-type Computed = {};
+type Data = { isVisible: boolean };
+type Methods = { visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void };
+type Computed = { getVisibilityClass: string };
 type Props = {};
 
-const defaultData: Data = {};
+const defaultData: Data = { isVisible: false };
 
 const components = {};
 
@@ -123,6 +145,18 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   data() {
     return { ...defaultData };
+  },
+  computed: {
+    getVisibilityClass() {
+      return this.isVisible ? '-visible' : '';
+    },
+  },
+  methods: {
+    visibilityChanged(isVisible, entry) {
+      if (!isVisible) return;
+
+      this.isVisible = true;
+    },
   },
 });
 </script>
