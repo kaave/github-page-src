@@ -1,31 +1,31 @@
 <!-- eslint-disable -->
 <template>
-  <section class="Entries">
-    <div class="Entries__inner">
-      <h2 class="Entries__header">recent entries</h2>
-      <ol class="Entries__list">
-        <li v-for="{ status, id, publish, subject, thumbnail } in entries.slice(0, 3)" :key="id" class="Entries__cell">
-          <nuxt-link :to="`/entries/${id}`" class="Entries__show" :style="getCellStyle(thumbnail)">
-            <div class="Entries__show-inner">
-              <div class="Entries__date">{{ getDateString(publish) }}</div>
-              <div class="Entries__subject">{{ subject }}</div>
+  <section class="LTs">
+    <div class="LTs__inner">
+      <h2 class="LTs__header">recent lts</h2>
+      <ol class="LTs__list">
+        <li v-for="{ date, eventName, title, link } in lts.slice(0, 3)" :key="eventName + title" class="LTs__cell">
+          <a :href="link" class="LTs__show" target="_blank" rel="noopener">
+            <div class="LTs__show-inner">
+              <div class="LTs__date">{{ getDateString(date) }} @ {{ eventName }}</div>
+              <div class="LTs__title">{{ title }}</div>
             </div>
-          </nuxt-link>
+          </a>
         </li>
       </ol>
-      <nuxt-link to="/entries" class="Entries__link">一覧はこちら 👉</nuxt-link>
+      <nuxt-link to="/lts" class="LTs__link">一覧はこちら 👉</nuxt-link>
     </div>
   </section>
 </template>
 <!-- eslint-enable -->
 
 <style lang="scss" scoped>
-.Entries {
+.LTs {
   position: relative;
   width: 100%;
 }
 
-.Entries__inner {
+.LTs__inner {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@
   }
 }
 
-.Entries__header {
+.LTs__header {
   font-size: 7.5vw;
   line-height: 1;
   letter-spacing: 0.05em;
@@ -59,7 +59,7 @@
   }
 }
 
-.Entries__text {
+.LTs__text {
   font-size: 3.75vw;
   line-height: 1.8;
 
@@ -74,7 +74,7 @@
   }
 }
 
-.Entries__link {
+.LTs__link {
   position: relative;
   display: inline-block;
   margin-top: 1em;
@@ -110,11 +110,11 @@
   }
 }
 
-.Entries__link:hover::after {
+.LTs__link:hover::after {
   background-color: rgba($colorWhite, 0.9);
 }
 
-.Entries__list {
+.LTs__list {
   width: 100%;
 
   @include notSp {
@@ -126,25 +126,25 @@
   }
 }
 
-.Entries__cell {
+.LTs__cell {
   line-height: 1.8;
 }
 
 @include sp {
-  .Entries__cell:not(:first-child) {
+  .LTs__cell:not(:first-child) {
     margin-top: 1em;
   }
 }
 
 @include notSp {
   @for $i from 1 through 3 {
-    .Entries__cell:nth-child(#{$i}) {
+    .LTs__cell:nth-child(#{$i}) {
       grid-area: cell + $i;
     }
   }
 }
 
-.Entries__show {
+.LTs__show {
   position: relative;
   display: block;
   width: 100%;
@@ -169,15 +169,15 @@
   }
 }
 
-.Entries__show-inner {
+.LTs__show-inner {
   display: grid;
   grid-template:
-    'Entries__date' auto
-    'Entries__subject' 1fr /
+    'LTs__date' auto
+    'LTs__title' 1fr /
     1fr;
   padding: 0 1vw;
   width: 100%;
-  background-color: #0008;
+  background-color: #0006;
 
   @include notSp {
     padding: 1.2em 1.5em;
@@ -185,8 +185,8 @@
   }
 }
 
-.Entries__date {
-  grid-area: Entries__date;
+.LTs__date {
+  grid-area: LTs__date;
   width: 100%;
   font-size: 3.75vw;
   padding: 0.5em 0;
@@ -203,8 +203,8 @@
   }
 }
 
-.Entries__subject {
-  grid-area: Entries__subject;
+.LTs__title {
+  grid-area: LTs__title;
   width: 100%;
 
   $pc-font-size: 2.4;
@@ -223,13 +223,12 @@
 import Vue from 'vue';
 import dateFormat from 'date-fns/format';
 
-import { Entry } from '~/value-objects/Entry';
-import { Thumbnail } from '~/value-objects/Thumbnail';
+import { LT } from '~/value-objects/LT';
 
 type Data = {};
-type Methods = { getDateString(date: Date): string; getCellStyle(thumbnail?: Thumbnail): { backgroundImage?: string } };
+type Methods = { getDateString(date: Date): string };
 type Computed = {};
-type Props = { entries: Entry[] };
+type Props = { lts: LT[] };
 
 const defaultData: Data = {};
 
@@ -238,10 +237,7 @@ const components = {};
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   props: {
-    entries: {
-      type: Array,
-      default: () => [],
-    },
+    lts: { type: Array, default: () => [] },
   },
   data() {
     return { ...defaultData };
@@ -249,11 +245,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   methods: {
     getDateString(date: Date): string {
       return dateFormat(date, 'MMM, D YYYY');
-    },
-    getCellStyle(thumbnail?: Thumbnail): { backgroundImage?: string } {
-      if (!thumbnail) return {};
-
-      return { backgroundImage: `url('${thumbnail.url}')` };
     },
   },
 });

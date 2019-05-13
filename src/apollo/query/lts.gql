@@ -1,0 +1,9 @@
+query content($orderBy: LtOrderByInput) {
+  lts(orderBy: $orderBy) {
+    date
+    description
+    link
+    eventName
+    title
+  }
+}

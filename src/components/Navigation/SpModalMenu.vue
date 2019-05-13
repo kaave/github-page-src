@@ -18,7 +18,7 @@
       <ul class="SpModalMenu__list SNS">
         <li v-for="{ key, url } in snses" :key="key" class="SNS__cell">
           <a :href="url" class="SNS__link" target="_blank" rel="noopener">
-            <component class="SNS__icon" :class="`-${key}`" :is="`icon-${key}`"></component>
+            <icon class="SNS__icon" :iconKey="key" />
           </a>
         </li>
       </ul>
@@ -30,10 +30,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import IconFacebook from '../Svg/IconFacebook.vue';
-import IconGithub from '../Svg/IconGithub.vue';
-import IconTwitter from '../Svg/IconTwitter.vue';
-import IconWantedly from '../Svg/IconWantedly.vue';
+import Icon from '../Icon.vue';
 
 type Data = {};
 type Methods = {};
@@ -42,7 +39,7 @@ type Props = { menus: string[]; snses: string[] };
 
 const defaultData: Data = {};
 
-const components = { IconFacebook, IconGithub, IconTwitter, IconWantedly };
+const components = { Icon };
 
 const backgroundColumnCount = 12;
 
@@ -182,27 +179,6 @@ $backgroundBlockTransition: all 300ms $easeOutExpo;
   &:active {
     color: $colorBlack;
     text-decoration: none;
-  }
-}
-
-.SNS__icon {
-  width: 1.2em;
-  height: 1.2em;
-
-  &.-twitter {
-    fill: #1da1f2;
-  }
-
-  &.-facebook {
-    fill: #3b5998;
-  }
-
-  &.-github {
-    fill: currentColor;
-  }
-
-  &.-wantedly {
-    fill: #01a4bb;
   }
 }
 </style>

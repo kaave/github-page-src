@@ -7,7 +7,7 @@
         名古屋在住のWebエンジニアによる一応ブログメインのサイトです。
         メモ、実験、音楽ネタ、料理ネタ、自転車ネタやらでまわしてます。
       </p>
-      <nuxt-link to="/about" class="About__link">詳細はこちら</nuxt-link>
+      <nuxt-link to="/about" class="About__link">詳細はこちら 👉</nuxt-link>
     </div>
   </section>
 </template>
@@ -98,7 +98,12 @@
     width: 100%;
     height: 20%;
     background: rgba($colorWhite, 0.6);
+    transition: background-color 200ms $easeOutExpo;
   }
+}
+
+.About__link:hover::after {
+  background-color: rgba($colorWhite, 0.9);
 }
 </style>
 

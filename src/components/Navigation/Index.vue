@@ -24,8 +24,8 @@ import PcMenu from './PcMenu.vue';
 
 type Data = { isShowSpMenu: boolean; isInitialize: boolean };
 type Methods = { handleHambergerClick: () => void };
-type Computed = { menus: string[]; snses: { key: string; url: string; desc: string }[] };
-type Props = {};
+type Computed = {};
+type Props = { menus: string[]; snses: { key: string; url: string; desc: string }[] };
 
 const defaultData: Data = { isShowSpMenu: false, isInitialize: false };
 
@@ -33,21 +33,12 @@ const components = { Hamburger, SpModalMenu, PcMenu };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
+  props: {
+    menus: { type: Array, default: () => [] },
+    snses: { type: Array, default: () => [] },
+  },
   data() {
     return { ...defaultData };
-  },
-  computed: {
-    menus() {
-      return ['about', 'entries', 'lts'];
-    },
-    snses() {
-      return [
-        { key: 'twitter', url: 'https://twitter.com/junkjunctions', desc: '@junkjunctions' },
-        { key: 'facebook', url: 'https://www.facebook.com/kyousuke.abe.9', desc: 'Kyousuke Abe' },
-        { key: 'github', url: 'https://github.com/kaave', desc: 'kaave' },
-        { key: 'wantedly', url: 'https://www.wantedly.com/users/57487254', desc: '安部亨佑' },
-      ];
-    },
   },
   mounted() {
     setTimeout(() => (this.isInitialize = true), 50);

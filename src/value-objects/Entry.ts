@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 import { ThumbnailJson, Thumbnail } from './Thumbnail';
 
 export type EntryJson = {
