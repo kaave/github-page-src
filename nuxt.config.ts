@@ -51,6 +51,7 @@ const meta = [
     name: 'format-detection',
     content: 'email=no,telephone=no,address=no',
   },
+  { hid: 'robots', name: 'robots', content: 'noindex' }, // TODO: 完成まで隠す
   ...og,
   ...twitter,
 ];
