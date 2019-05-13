@@ -27,7 +27,9 @@
 $footer-text-color: #aaa;
 
 .Footer {
+  position: relative;
   width: 100%;
+  background: #0008;
 }
 
 .Footer__inner {
