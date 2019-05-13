@@ -15,6 +15,12 @@
         <p class="Top__text">楽しんでってください！</p>
       </div>
     </div>
+    <div class="Top__arrow">
+      <icon-arrow-bottom />
+      <icon-arrow-bottom />
+      <icon-arrow-bottom />
+    </div>
+    <div class="-sr-only">scroll</div>
   </section>
 </template>
 <!-- eslint-enable -->
@@ -162,11 +168,61 @@
 .Top__text:not(:first-child) {
   margin-top: 1em;
 }
+
+.Top__arrow {
+  position: absolute;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10vw;
+  width: 1em;
+  height: 1em;
+  opacity: 0;
+  transition: opacity 800ms 500ms ease-out;
+}
+
+.-visible .Top__arrow {
+  opacity: 1;
+}
+
+.Top__arrow > svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  animation: top-arrow 1s infinite;
+}
+
+.Top__arrow > svg:nth-child(2) {
+  position: absolute;
+  top: 0.45em;
+  left: 0;
+  animation-delay: 333ms;
+}
+
+.Top__arrow > svg:nth-child(3) {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  animation-delay: 666ms;
+}
+
+@keyframes top-arrow {
+  from,
+  to {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+}
 </style>
 
 <script lang="ts">
 import Vue from 'vue';
 import { TweenLite, Power3 as Quart } from 'gsap';
+
+import IconArrowBottom from '../Svg/IconArrowBottom.vue';
 
 type Data = { isVisible: boolean };
 type Methods = {};
@@ -175,7 +231,7 @@ type Props = {};
 
 const defaultData: Data = { isVisible: false };
 
-const components = {};
+const components = { IconArrowBottom };
 
 const wait = async (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
