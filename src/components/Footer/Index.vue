@@ -42,7 +42,7 @@ $footer-text-color: #aaa;
     auto;
   width: 100%;
   height: 100%;
-  padding: 0 4vw 20vw;
+  padding: 10vw 4vw 15vw;
   color: $footer-text-color;
 
   @include notSp {
@@ -57,7 +57,7 @@ $footer-text-color: #aaa;
   font-size: 5.357vw;
   line-height: 1;
   letter-spacing: 0.05em;
-  margin: 1em 0 0.5em;
+  margin: 1em 0 1.5em;
 
   $pc-font-size: 3;
   @include notSp {
