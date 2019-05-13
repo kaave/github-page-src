@@ -141,7 +141,7 @@ const config: NuxtConfiguration = {
   },
   webfontloader: {
     google: {
-      families: ['Crimson+Text:400,700'], // set your favorite fonts
+      families: ['Vollkorn:400,700'], // set your favorite fonts
     },
   },
   build: {
