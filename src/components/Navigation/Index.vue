@@ -4,9 +4,7 @@
     <div class="Navigation__content -hidden-pc">
       <hamburger @click="handleHambergerClick" :is-close="isShowSpMenu" :is-show="!isOnTop" />
     </div>
-    <transition name="sp-menu" :duration="600">
-      <sp-modal-menu v-if="isShowSpMenu" :menus="menus" :snses="snses" />
-    </transition>
+    <sp-modal-menu :menus="menus" :snses="snses" :is-show="isShowSpMenu" />
     <pc-menu :menus="menus" :snses="snses" :is-show="!isOnTop" />
   </nav>
 </template>
@@ -122,56 +120,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   }
 }
 
-.sp-menu-enter .Navigation__sp-menu-cell {
-  transform: translate3d(10vw, 0, 0);
-  opacity: 0;
-}
-
-.sp-menu-enter-active .Navigation__sp-menu-cell {
-  transition: all 200ms $easeOutQuad;
-}
-
-.sp-menu-leave-active .Navigation__sp-menu-cell {
-  transform: translate3d(10vw, 0, 0);
-  opacity: 0;
-  transition: all 400ms $easeOutQuad;
-}
-
-.sp-menu-enter-active,
-.sp-menu-leave-active {
-  .Navigation__sp-menu-cell:first-child {
-    transition-delay: 100ms;
-  }
-
-  .Navigation__sp-menu-cell:nth-child(2) {
-    transition-delay: 150ms;
-  }
-
-  .Navigation__sp-menu-cell:last-child {
-    transition-delay: 200ms;
-  }
-}
-
 .Navigation__sp-sns {
   display: flex;
   justify-content: space-between;
   width: 7.5em;
   margin: 2em 0 0 auto;
-}
-
-.sp-menu-enter .Navigation__sp-sns {
-  transform: translate3d(10vw, 0, 0);
-  opacity: 0;
-}
-
-.sp-menu-enter-active .Navigation__sp-sns {
-  transition: all 200ms 250ms $easeOutQuad;
-}
-
-.sp-menu-leave-active .Navigation__sp-sns {
-  transform: translate3d(10vw, 0, 0);
-  opacity: 0;
-  transition: all 400ms 250ms $easeOutQuad;
 }
 
 .Navigation__sp-sns-cell {

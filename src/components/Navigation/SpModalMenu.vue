@@ -1,9 +1,7 @@
 <!-- eslint-disable -->
 <template>
-  <aside class="SpModalMenu">
-    <div class="SpModalMenu__background" role="presentation">
-      <span v-for="i in backgroundColumnRange" :key="i" class="SpModalMenu__background-block"></span>
-    </div>
+  <aside class="SpModalMenu" :hidden="!isShow">
+    <background class="SpModalMenu__background" />
     <div class="SpModalMenu__inner">
       <h1 class="SpModalMenu__header">
         <nuxt-link to="/" class="SpModalMenu__header-link">kaave.github.io</nuxt-link>
@@ -27,40 +25,6 @@
 </template>
 <!-- eslint-enable -->
 
-<script lang="ts">
-import Vue from 'vue';
-
-import Icon from '../Icon.vue';
-
-type Data = {};
-type Methods = {};
-type Computed = { backgroundColumnRange: number[] };
-type Props = { menus: string[]; snses: string[] };
-
-const defaultData: Data = {};
-
-const components = { Icon };
-
-const backgroundColumnCount = 12;
-
-export default Vue.extend<Data, Methods, Computed, Props>({
-  components,
-  props: {
-    menus: { type: Array, default: () => [] },
-    snses: { type: Array, default: () => [] },
-  },
-  data() {
-    return { ...defaultData };
-  },
-  computed: {
-    backgroundColumnRange() {
-      return [...Array(backgroundColumnCount).keys()];
-    },
-  },
-  methods: {},
-});
-</script>
-
 <style lang="scss" scoped>
 .SpModalMenu {
   z-index: nth($zLevels, 8);
@@ -80,36 +44,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   display: block;
   width: 100%;
   height: 100%;
+  transition: transform 200ms $easeOutExpo;
 }
 
-.SpModalMenu__background-block {
-  display: block;
-  background: rgba($colorWhite, 0.9);
-  margin: auto auto auto 0;
-}
-
-$blockSizes: 12%, 12%, 2%, 1%, 9%, 22%, 2%, 8%, 12%, 4%, 3%, 15%;
-
-@for $i from 1 through length($blockSizes) {
-  $blockSize: nth($blockSizes, $i);
-
-  .SpModalMenu__background-block:nth-child(#{$i}) {
-    width: 100% - random(20);
-    height: $blockSize;
-  }
-}
-
-$backgroundBlockTransition: all 300ms $easeOutExpo;
-
-.sp-menu-enter-active .SpModalMenu__background-block,
-.sp-menu-leave .SpModalMenu__background-block {
-  transition: $backgroundBlockTransition;
-}
-
-.sp-menu-enter .SpModalMenu__background-block,
-.sp-menu-leave-active .SpModalMenu__background-block {
+[hidden] .SpModalMenu__background {
   transform: translate3d(-100%, 0, 0);
-  transition: $backgroundBlockTransition;
 }
 
 .SpModalMenu__inner {
@@ -118,6 +57,11 @@ $backgroundBlockTransition: all 300ms $easeOutExpo;
   width: 100%;
   font-size: 6.429vw;
   letter-spacing: 0.05em;
+  transition: transform 200ms 100ms $easeOutExpo;
+}
+
+[hidden] .SpModalMenu__inner {
+  transform: translate3d(-100%, 0, 0);
 }
 
 .SpModalMenu__header {
@@ -182,3 +126,39 @@ $backgroundBlockTransition: all 300ms $easeOutExpo;
   }
 }
 </style>
+
+<script lang="ts">
+import Vue from 'vue';
+
+import Icon from '../Icon.vue';
+import Background from './SpMenuBackground.vue';
+
+type Data = {};
+type Methods = {};
+type Computed = { backgroundColumnRange: number[] };
+type Props = { menus: string[]; snses: string[]; isShow: boolean };
+
+const defaultData: Data = {};
+
+const components = { Icon, Background };
+
+const backgroundColumnCount = 12;
+
+export default Vue.extend<Data, Methods, Computed, Props>({
+  components,
+  props: {
+    menus: { type: Array, default: () => [] },
+    snses: { type: Array, default: () => [] },
+    isShow: { type: Boolean, default: false },
+  },
+  data() {
+    return { ...defaultData };
+  },
+  computed: {
+    backgroundColumnRange() {
+      return [...Array(backgroundColumnCount).keys()];
+    },
+  },
+  methods: {},
+});
+</script>
