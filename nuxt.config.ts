@@ -141,10 +141,11 @@ const config: NuxtConfiguration = {
   },
   webfontloader: {
     google: {
-      families: ['Vollkorn:400,700'], // set your favorite fonts
+      families: ['Crimson+Text:400,700'], // set your favorite fonts
     },
   },
   build: {
+    extractCSS: true,
     postcss: {
       plugins: {
         'postcss-custom-properties': {},
@@ -152,6 +153,10 @@ const config: NuxtConfiguration = {
         'postcss-calc': {},
         'postcss-flexbugs-fixes': {},
         'postcss-url': {},
+        cssnano: {
+          safe: true,
+          calc: false,
+        },
       },
       preset: {
         autoprefixer: {
@@ -188,6 +193,9 @@ const config: NuxtConfiguration = {
         nuxtConfig.devtool = 'inline-source-map';
       }
     },
+  },
+  html: {
+    minify: false,
   },
   server: { host, port },
 };
