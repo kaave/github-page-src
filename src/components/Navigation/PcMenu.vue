@@ -1,6 +1,7 @@
 <!-- eslint-disable -->
 <template>
-  <div class="PcMenu -hidden-sp">
+  <div class="PcMenu -hidden-sp" :hidden="!isShow">
+    <background />
     <div class="PcMenu__inner">
       <h1 class="PcMenu__header">kaave.github.io</h1>
       <div class="PcMenu__links">
@@ -12,7 +13,7 @@
         <ul class="PcMenu__link-list -sns">
           <li v-for="{ key, url } in snses" :key="key" class="PcMenu__link-cell">
             <a :href="url" class="PcMenu__link -sns" target="_blank" rel="noopener">
-              <component class="PcMenu__icon" :class="`-${key}`" :is="`icon-${key}`"></component>
+              <icon class="PcMenu__icon" :iconKey="key" />
             </a>
           </li>
         </ul>
@@ -25,28 +26,22 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import IconFacebook from '../Svg/IconFacebook.vue';
-import IconGithub from '../Svg/IconGithub.vue';
-import IconTwitter from '../Svg/IconTwitter.vue';
-import IconWantedly from '../Svg/IconWantedly.vue';
+import Background from './PcMenuBackground.vue';
+import Icon from '../Icon.vue';
 
 type Data = {};
 type Methods = {};
 type Computed = {};
-type Props = { menus: string[]; snses: string[] };
+type Props = { isShow: boolean; menus: string[]; snses: string[] };
 
-const defaultData: Data = { isShowSpMenu: false };
-
-const components = { IconFacebook, IconGithub, IconTwitter, IconWantedly };
+const components = { Background, Icon };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   props: {
+    isShow: { type: Boolean, default: false },
     menus: { type: Array, default: () => [] },
     snses: { type: Array, default: () => [] },
-  },
-  data() {
-    return { ...defaultData };
   },
   methods: {},
 });
@@ -60,24 +55,50 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   left: 0;
   width: 100%;
   padding: 4vw;
+  color: $colorBlack;
 
   @include notSp {
     padding: 0;
   }
 }
 
+.PcMenu__background {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 200ms $easeOutExpo;
+}
+
+[hidden] .PcMenu__background {
+  transform: translate3d(0, -100%, 0);
+}
+
 .PcMenu__inner {
+  z-index: 1;
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
   max-width: $maxWidth;
-  padding: $horizontalPadding;
+  padding: 10px $horizontalPadding;
   margin: auto;
+  transition: transform 200ms 80ms $easeOutExpo;
+}
+
+[hidden] .PcMenu__inner {
+  transform: translate3d(0, -100%, 0);
 }
 
 .PcMenu__header {
   display: block;
   font-size: 3.06vw;
+  transform: translateY(-10%);
 
   @include maxSize {
     font-size: 3.2rem;
@@ -107,7 +128,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   &,
   &:hover,
   &:active {
-    color: $colorWhite;
+    color: currentColor;
     text-decoration: none;
   }
 }

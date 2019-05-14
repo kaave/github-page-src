@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <button class="Hamburger" :class="isClose ? '-close' : ''" @click="handleHamburgerClick">
+  <button class="Hamburger" :class="isClose ? '-close' : ''" @click="handleHamburgerClick" :hidden="!isShow">
     <div class="Hamburger__inner">
       <span class="Hamburger__line"></span>
       <span class="Hamburger__line"></span>
@@ -25,6 +25,13 @@
   max-width: $max-hamberger-size-sp;
   max-height: $max-hamberger-size-sp;
   margin: 0;
+  transition: opacity 300ms $easeOutExpo;
+}
+
+.Hamburger[hidden] {
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
 }
 
 .Hamburger__inner {
@@ -72,7 +79,7 @@ import Vue from 'vue';
 type Data = {};
 type Methods = { handleHamburgerClick: () => void };
 type Computed = {};
-type Props = { isClose: boolean };
+type Props = { isClose: boolean; isShow: boolean };
 
 const defaultData: Data = {};
 
@@ -82,6 +89,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   props: {
     isClose: { type: Boolean, default: false },
+    isShow: { type: Boolean, default: false },
   },
   methods: {
     handleHamburgerClick() {

@@ -1,7 +1,8 @@
 <!-- eslint-disable -->
 <template>
   <div>
-    <navigation-component :menus="menus" :snses="snses" />
+    <span role="presentation" class="PageTopHook" ref="hook"></span>
+    <navigation-component :menus="menus" :snses="snses" :is-on-top="isOnTop" />
     <main id="main" class="Main" role="main">
       <top-component />
       <hr class="SectionBreak" />
@@ -10,14 +11,29 @@
       <entries-component :entries="parsedEntries" />
       <hr class="SectionBreak" />
       <lts-component :lts="parsedLTs" />
-      <hr class="SectionBreak" />
     </main>
     <footer-component :menus="menus" :snses="snses" />
   </div>
 </template>
 <!-- eslint-enable -->
 
+<!--
+v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0,0.1,1] }, once: false }"
+-->
+
 <style lang="scss" scoped>
+.PageTopHook {
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+  width: 1px;
+  height: 1px;
+  background: #f00;
+}
+
 .Main {
   z-index: 1;
   position: relative;
@@ -56,14 +72,16 @@ import FooterComponent from './Footer/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
 
-type Data = { entries: EntryJson[]; lts: LTJson[] };
-type Methods = { [x: string]: MutationMethod };
+type Data = { entries: EntryJson[]; lts: LTJson[]; isOnTop: boolean };
+type Methods = {
+  [x: string]: MutationMethod;
+};
 type Computed =
   | { parsedEntries: Entry[]; parsedLTs: LT[]; menus: string[]; snses: { key: string; url: string; desc: string }[] }
   | typeof vuexGetters;
 type Props = {};
 
-const defaultData: Data = { entries: [], lts: [] };
+const defaultData: Data = { entries: [], lts: [], isOnTop: true };
 
 const components = {
   NavigationComponent,
@@ -107,6 +125,16 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     entered(val) {
       console.log(val);
     },
+  },
+  mounted() {
+    const { hook } = this.$refs;
+    if (!(hook instanceof HTMLElement)) return;
+
+    const observer = new IntersectionObserver(
+      event => event.forEach(entry => (this.isOnTop = entry.intersectionRatio === 1)),
+      { threshold: [0, 1] },
+    );
+    observer.observe(hook);
   },
   methods: {
     ...mapMutations({ clickClick: 'click' }),

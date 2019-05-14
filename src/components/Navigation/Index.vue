@@ -1,16 +1,14 @@
 <!-- eslint-disable -->
 <template>
-  <!-- eslint-disable -->
   <nav class="Navigation" :class="!isInitialize ? '-not-init' : ''">
     <div class="Navigation__content -hidden-pc">
-      <hamburger @click="handleHambergerClick" :is-close="isShowSpMenu" />
+      <hamburger @click="handleHambergerClick" :is-close="isShowSpMenu" :is-show="!isOnTop" />
     </div>
     <transition name="sp-menu" :duration="600">
       <sp-modal-menu v-if="isShowSpMenu" :menus="menus" :snses="snses" />
     </transition>
-    <pc-menu :menus="menus" :snses="snses" />
+    <pc-menu :menus="menus" :snses="snses" :is-show="!isOnTop" />
   </nav>
-  <!-- eslint-enable -->
 </template>
 <!-- eslint-enable -->
 
@@ -25,7 +23,7 @@ import PcMenu from './PcMenu.vue';
 type Data = { isShowSpMenu: boolean; isInitialize: boolean };
 type Methods = { handleHambergerClick: () => void };
 type Computed = {};
-type Props = { menus: string[]; snses: { key: string; url: string; desc: string }[] };
+type Props = { menus: string[]; snses: { key: string; url: string; desc: string }[]; isOnTop: boolean };
 
 const defaultData: Data = { isShowSpMenu: false, isInitialize: false };
 
@@ -36,6 +34,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   props: {
     menus: { type: Array, default: () => [] },
     snses: { type: Array, default: () => [] },
+    isOnTop: { type: Boolean, default: false },
   },
   data() {
     return { ...defaultData };
@@ -54,13 +53,14 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
 <style lang="scss" scoped>
 .Navigation {
+  z-index: nth($zLevels, 8);
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+
   @include sp {
-    z-index: nth($zLevels, 8);
-    position: fixed;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
     padding: 4vw;
   }
 }
