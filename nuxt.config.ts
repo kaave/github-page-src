@@ -198,9 +198,17 @@ const config: NuxtConfiguration = {
         nuxtConfig.devtool = 'inline-source-map';
       }
     },
-  },
-  html: {
-    minify: false,
+    html: {
+      minify: {
+        minifyCSS: false,
+      },
+    },
+    terser: {
+      extractComments: {
+        condition: /^\**!|@preserve|@license|@cc_on/i,
+        filename: 'licenses.txt',
+      },
+    },
   },
   server: { host, port },
 };
