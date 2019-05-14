@@ -153,6 +153,10 @@ const config: NuxtConfiguration = {
         'postcss-calc': {},
         'postcss-flexbugs-fixes': {},
         'postcss-url': {},
+        '@fullhuman/postcss-purgecss': {
+          content: ['./src/pages/**/*.vue', './src/layouts/**/*.vue', './src/components/**/*.vue'],
+          whitelist: ['html', 'body'],
+        },
         cssnano: {
           safe: true,
           calc: false,

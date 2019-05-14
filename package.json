@@ -61,6 +61,7 @@
         "vue-observe-visibility": "^0.4.4"
     },
     "devDependencies": {
+        "@fullhuman/postcss-purgecss": "^1.2.0",
         "@mapbox/stylelint-processor-arbitrary-tags": "^0.2.0",
         "@nuxt/typescript": "^2.6.3",
         "@nuxtjs/eslint-config": "^0.0.1",
