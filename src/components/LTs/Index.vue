@@ -181,7 +181,7 @@
   color: #fff;
   background-size: cover;
   background-position: center;
-  background-repeat: none;
+  background-repeat: no-repeat;
 
   &,
   &:hover,
