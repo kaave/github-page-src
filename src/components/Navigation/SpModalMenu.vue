@@ -36,6 +36,10 @@
   padding: 8vw 6vw;
 }
 
+.SpModalMenu[hidden] {
+  transform: translateX(-100vw);
+}
+
 .SpModalMenu__background {
   z-index: 0;
   position: absolute;
