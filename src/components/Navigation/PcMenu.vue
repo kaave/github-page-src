@@ -3,7 +3,9 @@
   <div class="PcMenu -hidden-sp" :hidden="!isShow">
     <background />
     <div class="PcMenu__inner">
-      <h1 class="PcMenu__header">kaave.github.io</h1>
+      <h1 class="PcMenu__header">
+        <nuxt-link to="/" class="PcMenu__header-link">kaave.github.io</nuxt-link>
+      </h1>
       <div class="PcMenu__links">
         <ul class="PcMenu__link-list -menu">
           <li v-for="menu in menus" :key="menu" class="PcMenu__link-cell">
@@ -102,6 +104,16 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 
   @include maxSize {
     font-size: 3.2rem;
+  }
+}
+
+.PcMenu__header-link {
+  color: currentColor;
+
+  &,
+  &:hover,
+  &:active {
+    text-decoration: none;
   }
 }
 

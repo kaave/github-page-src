@@ -2,7 +2,9 @@
 <template>
   <footer id="footer" class="Footer">
     <div class="Footer__inner">
-      <h2 class="Footer__header">kaave.github.io</h2>
+      <h2 class="Footer__header">
+        <nuxt-link to="/" class="Footer__header-link">kaave.github.io</nuxt-link>
+      </h2>
       <div class="Footer__menus-and-snses">
         <ul class="Footer__link Menu">
           <li v-for="menu in menus" :key="menu" class="Menu__cell">
@@ -72,6 +74,16 @@ $footer-text-color: #aaa;
 
   @include maxSize {
     font-size: $pc-font-size + rem;
+  }
+}
+
+.Footer__header-link {
+  color: currentColor;
+
+  &,
+  &:hover,
+  &:active {
+    text-decoration: none;
   }
 }
 

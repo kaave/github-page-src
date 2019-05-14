@@ -71,10 +71,11 @@
 }
 
 .SpModalMenu__header-link {
+  color: currentColor;
+
   &,
   &:hover,
   &:active {
-    color: currentColor;
     text-decoration: none;
   }
 }
