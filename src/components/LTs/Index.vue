@@ -9,6 +9,13 @@
       <ol class="LTs__list">
         <li v-for="{ date, eventName, title, link } in lts.slice(0, 3)" :key="eventName + title" class="LTs__cell">
           <a :href="link" class="LTs__show" target="_blank" rel="noopener">
+            <span
+              v-for="key in ['top', 'right', 'bottom', 'left']"
+              :key="key"
+              class="LTs__show-border"
+              :class="`-${key}`"
+              role="presentation"
+            ></span>
             <div class="LTs__show-inner">
               <div class="LTs__date">{{ getDateString(date) }} @ {{ eventName }}</div>
               <div class="LTs__title">{{ title }}</div>
@@ -166,7 +173,7 @@
 
 @for $i from 1 through 3 {
   .LTs__cell:nth-child(#{$i}) {
-    transition-delay: 400ms + $i * 50;
+    transition-delay: 400ms + $i * 100;
 
     @include notSp {
       grid-area: cell + $i;
@@ -191,12 +198,56 @@
 
   @include notSp {
     height: 100%;
-
-    &:hover,
-    &:active {
-      box-shadow: 0 0 0 2px #fff;
-    }
   }
+}
+
+.LTs__show-border {
+  position: absolute;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 200ms $easeOutExpo;
+  background: currentColor;
+}
+
+.LTs__show-border.-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: left center;
+  transform: scale3d(0, 1, 1);
+}
+
+.LTs__show-border.-right {
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: top center;
+  transform: scale3d(1, 0, 1);
+}
+
+.LTs__show-border.-bottom {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: right center;
+  transform: scale3d(0, 1, 1);
+}
+
+.LTs__show-border.-left {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: bottom center;
+  transform: scale3d(1, 0, 1);
+}
+
+.LTs__show:hover .LTs__show-border {
+  transform: scale3d(1, 1, 1);
 }
 
 .LTs__show-inner {

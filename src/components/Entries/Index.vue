@@ -9,6 +9,13 @@
       <ol class="Entries__list">
         <li v-for="{ status, id, publish, subject, thumbnail } in entries.slice(0, 3)" :key="id" class="Entries__cell">
           <nuxt-link :to="`/entries/${id}`" class="Entries__show" :style="getCellStyle(thumbnail)">
+            <span
+              v-for="key in ['top', 'right', 'bottom', 'left']"
+              :key="key"
+              class="Entries__show-border"
+              :class="`-${key}`"
+              role="presentation"
+            ></span>
             <div class="Entries__show-inner">
               <div class="Entries__date">{{ getDateString(publish) }}</div>
               <div class="Entries__subject">{{ subject }}</div>
@@ -166,7 +173,7 @@
 
 @for $i from 1 through 3 {
   .Entries__cell:nth-child(#{$i}) {
-    transition-delay: 400ms + $i * 50;
+    transition-delay: 400ms + $i * 100;
 
     @include notSp {
       grid-area: cell + $i;
@@ -191,12 +198,56 @@
 
   @include notSp {
     height: 100%;
-
-    &:hover,
-    &:active {
-      box-shadow: 0 0 0 2px #fff;
-    }
   }
+}
+
+.Entries__show-border {
+  position: absolute;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 200ms $easeOutExpo;
+  background: currentColor;
+}
+
+.Entries__show-border.-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: left center;
+  transform: scale3d(0, 1, 1);
+}
+
+.Entries__show-border.-right {
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: top center;
+  transform: scale3d(1, 0, 1);
+}
+
+.Entries__show-border.-bottom {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: right center;
+  transform: scale3d(0, 1, 1);
+}
+
+.Entries__show-border.-left {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: bottom center;
+  transform: scale3d(1, 0, 1);
+}
+
+.Entries__show:hover .Entries__show-border {
+  transform: scale3d(1, 1, 1);
 }
 
 .Entries__show-inner {
