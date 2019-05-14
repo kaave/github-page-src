@@ -61,12 +61,13 @@
   letter-spacing: 0.05em;
   margin-bottom: 0.5em;
 
+  $pc-font-size: 6;
   @include notSp {
-    @include responsiveFontSize(6);
+    @include responsiveFontSize($pc-font-size);
   }
 
   @include maxSize {
-    font-size: 6rem;
+    font-size: $pc-font-size + rem;
   }
 }
 
@@ -151,13 +152,14 @@
   opacity: 0;
   transition: opacity 800ms 500ms ease-out;
 
+  $pc-font-size: 2;
   @include notSp {
-    @include responsiveFontSize(2);
+    @include responsiveFontSize($pc-font-size);
     line-height: 1.6;
   }
 
   @include maxSize {
-    font-size: 2rem;
+    font-size: $pc-font-size + rem;
   }
 }
 
@@ -179,6 +181,15 @@
   height: 1em;
   opacity: 0;
   transition: opacity 800ms 500ms ease-out;
+
+  $pc-font-size: 3;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .-visible .Top__arrow {
