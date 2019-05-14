@@ -7,7 +7,6 @@ import Sass from 'sass';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
 import imageminWebp from 'imagemin-webp';
-import { createContext } from 'vm';
 // import imageminGif2Webp from 'imagemin-gif2webp';
 
 Dotenv.config();
@@ -175,8 +174,10 @@ const config: NuxtConfiguration = {
       },
     },
     extend(nuxtConfig, ctx) {
-      // Run ESLint on save
       if (!ctx.isDev && nuxtConfig.module) {
+        /*
+         * set production tsconfig
+         */
         const tsconfigPath = `${process.cwd()}/tsconfig.production.json`;
 
         const tsRules = nuxtConfig.module.rules
