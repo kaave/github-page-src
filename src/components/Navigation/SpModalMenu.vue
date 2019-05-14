@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <aside class="SpModalMenu" :hidden="!isShow">
+  <aside class="SpModalMenu -hidden-pc" :hidden="!isShow">
     <background class="SpModalMenu__background" />
     <div class="SpModalMenu__inner">
       <h1 class="SpModalMenu__header">

@@ -123,7 +123,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
 }
 
 .PcMenu__link {
+  position: relative;
   display: inline-block;
+  overflow: hidden;
 
   &,
   &:hover,
@@ -131,6 +133,35 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     color: currentColor;
     text-decoration: none;
   }
+}
+
+.PcMenu__link.-menu {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  &::before {
+    opacity: 0.3;
+  }
+
+  &::after {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 400ms $easeOutExpo;
+  }
+}
+
+.PcMenu__link:hover.-menu::after {
+  transform: none;
 }
 
 .PcMenu__icon {

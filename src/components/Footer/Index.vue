@@ -28,8 +28,13 @@ $footer-text-color: #aaa;
 
 .Footer {
   position: relative;
+  margin-top: 20vw;
   width: 100%;
   background: #0008;
+
+  @include notSp {
+    margin-top: 5rem;
+  }
 }
 
 .Footer__inner {
@@ -42,12 +47,12 @@ $footer-text-color: #aaa;
     auto;
   width: 100%;
   height: 100%;
-  padding: 10vw 4vw 15vw;
+  padding: 10vw 4vw;
   color: $footer-text-color;
 
   @include notSp {
     max-width: $maxWidth;
-    padding: 0 $horizontalPadding 20px;
+    padding: 3rem $horizontalPadding;
     margin: auto;
   }
 }
@@ -57,7 +62,7 @@ $footer-text-color: #aaa;
   font-size: 5.357vw;
   line-height: 1;
   letter-spacing: 0.05em;
-  margin: 1em 0 1.5em;
+  margin: 0 0 1em;
 
   $pc-font-size: 3;
   @include notSp {
@@ -103,12 +108,44 @@ $footer-text-color: #aaa;
 }
 
 .Menu__link {
+  position: relative;
+  display: inline-block;
   color: currentColor;
+  overflow: hidden;
 
   &,
   &:hover,
   &:active {
     text-decoration: none;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  &::before {
+    opacity: 0.3;
+  }
+
+  &::after {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 400ms $easeOutExpo;
+  }
+}
+
+@include notSp {
+  .Menu__link:hover::after {
+    transform: none;
   }
 }
 

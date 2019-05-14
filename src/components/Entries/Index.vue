@@ -105,6 +105,7 @@
   color: currentColor;
   opacity: 0;
   transition: opacity 300ms 400ms ease-out;
+  overflow: hidden;
 
   $pc-font-size: 1.8;
   @include notSp {
@@ -122,6 +123,7 @@
     text-decoration: none;
   }
 
+  &::before,
   &::after {
     content: '';
     z-index: 0;
@@ -129,9 +131,17 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20%;
-    background: rgba($colorWhite, 0.6);
-    transition: background-color 200ms $easeOutExpo;
+    height: 1px;
+    background: $colorWhite;
+  }
+
+  &::before {
+    opacity: 0.3;
+  }
+
+  &::after {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 400ms $easeOutExpo;
   }
 }
 
@@ -140,7 +150,7 @@
 }
 
 .Entries__link:hover::after {
-  background-color: rgba($colorWhite, 0.9);
+  transform: none;
 }
 
 .Entries__list {
