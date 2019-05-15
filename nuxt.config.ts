@@ -144,7 +144,6 @@ const config: NuxtConfiguration = {
     },
   },
   build: {
-    extractCSS: true,
     postcss: {
       plugins: {
         'postcss-custom-properties': {},
