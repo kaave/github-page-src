@@ -5,9 +5,9 @@
     <section-break />
     <about-component />
     <section-break />
-    <entries-component :entries="parsedEntries" />
+    <entries-component :entries="entries" />
     <section-break />
-    <lts-component :lts="parsedLTs" />
+    <lts-component :lts="lts" />
   </main>
 </template>
 <!-- eslint-enable -->
@@ -21,13 +21,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters, mapMutations, MutationMethod } from 'vuex';
+import { mapGetters, mapMutations, MutationMethod, ActionMethod } from 'vuex';
 
 import { MutationKeys } from '../store';
-import EntriesQuery from '../apollo/query/entries.gql';
-import LTsQuery from '../apollo/query/lts.gql';
-import { Entry, EntryJson } from '../value-objects/Entry';
-import { LT, LTJson } from '../value-objects/LT';
+import { Entry } from '../value-objects/Entry';
+import { LT } from '../value-objects/LT';
 import TopComponent from './Top/Top/Index.vue';
 import AboutComponent from './Top/About/Index.vue';
 import EntriesComponent from './Top/Entries/Index.vue';
@@ -36,14 +34,14 @@ import SectionBreak from './SectionBreak.vue';
 
 const vuexGetters = mapGetters(['entered']);
 
-type Data = { entries: EntryJson[]; lts: LTJson[] };
+type Data = {};
 type Methods = {
-  [x: string]: MutationMethod;
+  [x: string]: MutationMethod | ActionMethod;
 };
-type Computed = { parsedEntries: Entry[]; parsedLTs: LT[] } | typeof vuexGetters;
+type Computed = { entries: Entry[]; lts: LT[] } | typeof vuexGetters;
 type Props = {};
 
-const defaultData: Data = { entries: [], lts: [] };
+const defaultData: Data = {};
 
 const components = {
   TopComponent,
@@ -59,15 +57,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     return { ...defaultData };
   },
   computed: {
-    parsedEntries() {
-      return this.entries.map<Entry>(src => ({
-        ...src,
-        publish: new Date(src.publish),
-        entryHtml: this.$md.render(src.entry),
-      }));
+    entries() {
+      return this.$store.state.entries.entries;
     },
-    parsedLTs() {
-      return this.lts.map<LT>(src => ({ ...src, date: new Date(src.date) }));
+    lts() {
+      return this.$store.state.lts.lts;
     },
     ...vuexGetters,
   },
@@ -78,20 +72,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
   methods: {
     ...mapMutations({ clickClick: 'click' }),
-  },
-  apollo: {
-    entries: {
-      query: EntriesQuery,
-      variables: {
-        orderBy: 'publish_DESC',
-      },
-    },
-    lts: {
-      query: LTsQuery,
-      variables: {
-        orderBy: 'date_DESC',
-      },
-    },
   },
 });
 </script>

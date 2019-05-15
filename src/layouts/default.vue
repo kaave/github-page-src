@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapMutations, mapActions, MutationMethod, ActionMethod } from 'vuex';
 
 import IntroductionComponent from '~/components/Introduction.vue';
 import BackgroundComponent from '~/components/Background/Index.vue';
@@ -24,7 +25,9 @@ import NavigationComponent from '~/components/Navigation/Index.vue';
 import FooterComponent from '~/components/Footer/Index.vue';
 
 type Data = { tasks: Promise<any>[]; isLoaded: boolean; isOnTop: boolean };
-type Methods = {};
+type Methods = {
+  [x: string]: MutationMethod | ActionMethod;
+};
 type Computed = { menus: string[]; snses: { key: string; url: string; desc: string }[] };
 type Props = {};
 
@@ -54,6 +57,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
   },
   mounted() {
+    this.getEntries();
+    this.getLTs();
+
     const { hook } = this.$refs;
     if (!(hook instanceof HTMLElement)) return;
 
@@ -67,6 +73,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     onTaskFinished() {
       this.isLoaded = true;
     },
+    ...mapActions({ getEntries: 'entries/get', getLTs: 'lts/get' }),
   },
 });
 </script>
