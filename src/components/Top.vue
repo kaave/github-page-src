@@ -42,10 +42,10 @@ import EntriesQuery from '../apollo/query/entries.gql';
 import LTsQuery from '../apollo/query/lts.gql';
 import { Entry, EntryJson } from '../value-objects/Entry';
 import { LT, LTJson } from '../value-objects/LT';
-import TopComponent from './Top/Index.vue';
-import AboutComponent from './About/Index.vue';
-import EntriesComponent from './Entries/Index.vue';
-import LtsComponent from './LTs/Index.vue';
+import TopComponent from './Top/Top/Index.vue';
+import AboutComponent from './Top/About/Index.vue';
+import EntriesComponent from './Top/Entries/Index.vue';
+import LtsComponent from './Top/LTs/Index.vue';
 
 const vuexGetters = mapGetters(['entered']);
 

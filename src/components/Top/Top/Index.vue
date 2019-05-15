@@ -233,7 +233,7 @@
 import Vue from 'vue';
 import { TweenLite, Power3 as Quart } from 'gsap';
 
-import IconArrowBottom from '../Svg/IconArrowBottom.vue';
+import IconArrowBottom from '~/components/Svg/IconArrowBottom.vue';
 
 type Data = { isVisible: boolean };
 type Methods = {};

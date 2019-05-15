@@ -7,7 +7,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import MainComponent from '~/components/Main.vue';
+import MainComponent from '~/components/Top.vue';
 
 type Data = {};
 type Methods = {};
