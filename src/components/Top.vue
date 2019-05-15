@@ -2,11 +2,11 @@
 <template>
   <main id="main" class="Main" role="main">
     <top-component />
-    <hr class="SectionBreak" />
+    <section-break />
     <about-component />
-    <hr class="SectionBreak" />
+    <section-break />
     <entries-component :entries="parsedEntries" />
-    <hr class="SectionBreak" />
+    <section-break />
     <lts-component :lts="parsedLTs" />
   </main>
 </template>
@@ -16,20 +16,6 @@
 .Main {
   z-index: 1;
   position: relative;
-}
-
-.SectionBreak {
-  border: 0;
-  padding: 0;
-  margin: 15vw auto;
-  width: 30vw;
-  height: 1px;
-  background: rgba($colorWhite, 0.8);
-
-  @include notSp {
-    margin: 50px auto;
-    max-width: 200px;
-  }
 }
 </style>
 
@@ -46,6 +32,7 @@ import TopComponent from './Top/Top/Index.vue';
 import AboutComponent from './Top/About/Index.vue';
 import EntriesComponent from './Top/Entries/Index.vue';
 import LtsComponent from './Top/LTs/Index.vue';
+import SectionBreak from './SectionBreak.vue';
 
 const vuexGetters = mapGetters(['entered']);
 
@@ -63,6 +50,7 @@ const components = {
   AboutComponent,
   EntriesComponent,
   LtsComponent,
+  SectionBreak,
 };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
