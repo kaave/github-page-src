@@ -181,6 +181,10 @@ pre[class*="language-"] {
     border-color: rgba($colorWhite, 0.8);
     border-left: 0;
     border-right: 0;
+
+    @include notSp {
+        padding: 1em $horizontalPadding;
+    }
 }
 
 /* purgecss end ignore */

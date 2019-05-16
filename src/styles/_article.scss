@@ -7,13 +7,18 @@
 .Content {
     position: relative;
     display: block;
-    font-size: 1.6rem;
+    font-size: 4.286vw;
     letter-spacing: 0.05em;
     line-height: 1.8;
     color: $colorWhite;
 
+    $pc-font-size: 1.8;
     @include notSp {
-        font-size: 1.8rem;
+        @include responsiveFontSize($pc-font-size);
+    }
+
+    @include maxSize {
+        font-size: $pc-font-size + rem;
     }
 
     & > * {
@@ -22,6 +27,11 @@
         width: 100%;
         padding-left: $horizontalPaddingSp;
         padding-right: $horizontalPaddingSp;
+
+        @include notSp {
+            padding-left: $horizontalPadding;
+            padding-right: $horizontalPadding;
+        }
     }
 
     & > [class*="language-"] {
@@ -39,8 +49,14 @@
         margin-top: 1em;
         font-size: 3.75vw;
 
+        $pc-font-size: 1.6;
         @include notSp {
-            margin: 1.5em auto auto;
+            @include responsiveFontSize($pc-font-size);
+            margin: 1em auto auto;
+        }
+
+        @include maxSize {
+            font-size: $pc-font-size + rem;
         }
     }
 
@@ -51,6 +67,12 @@
     a:not(.header-anchor) {
         text-decoration: solid underline $colorBrand;
         color: currentColor;
+
+        @include notSp {
+            &:hover {
+                text-decoration-color: currentColor;
+            }
+        }
     }
 
     a:not(.header-anchor):not([target="_blank"]) {
@@ -84,6 +106,10 @@
             width: 0.2em;
             height: 80%;
             background: rgba($colorWhite, 0.8);
+
+            @include notSp {
+                left: $horizontalPadding;
+            }
         }
     }
 
@@ -102,6 +128,10 @@
             width: 0.2em;
             height: 80%;
             background: rgba($colorWhite, 0.6);
+
+            @include notSp {
+                left: $horizontalPadding;
+            }
         }
     }
 
@@ -126,8 +156,9 @@
         margin: 0.5em $horizontalPaddingSp auto $horizontalPaddingSp;
 
         @include notSp {
-            margin: auto;
-            padding: 0 0 0 1.3em;
+            width: calc(100% - #{$horizontalPadding} * 2);
+            padding: 1.5em 0 0 1.3em;
+            margin: auto $horizontalPadding;
         }
     }
 
@@ -135,6 +166,16 @@
         width: 100%;
         font-size: 3.75vw;
         list-style-type: disc;
+
+        $pc-font-size: 1.6;
+        @include notSp {
+            @include responsiveFontSize($pc-font-size);
+            margin: auto;
+        }
+
+        @include maxSize {
+            font-size: $pc-font-size + rem;
+        }
     }
 
     > ul ul {
@@ -158,7 +199,7 @@
         background: rgba($colorWhite, 0.2);
         margin: auto 0.2em;
         padding: 0 0.2em;
-        font-size: 0.9em;
+        font-size: 1.2em;
         line-height: 1.4;
     }
 

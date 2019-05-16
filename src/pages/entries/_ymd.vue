@@ -75,6 +75,15 @@
   width: 100%;
   height: 100%;
   font-size: 7.5vw;
+
+  $pc-font-size: 4;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Header__date {
