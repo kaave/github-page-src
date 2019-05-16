@@ -90,6 +90,7 @@
 .Year__header {
   width: 100%;
   font-size: 5.357vw;
+  margin-bottom: 0.5em;
 
   $pc-font-size: 2.8;
   @include notSp {

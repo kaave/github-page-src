@@ -38,6 +38,7 @@
 
 .SpModalMenu[hidden] {
   transform: translateX(-100vw);
+  pointer-events: none;
 }
 
 .SpModalMenu__background {

@@ -1,0 +1,171 @@
+/* stylelint-disable selector-max-specificity */
+/* purgecss start ignore */
+
+@import "./variables";
+@import "./mixins";
+
+.Content {
+    position: relative;
+    display: block;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+    color: $colorWhite;
+
+    @include notSp {
+        font-size: 1.8rem;
+    }
+
+    & > * {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding-left: $horizontalPaddingSp;
+        padding-right: $horizontalPaddingSp;
+    }
+
+    & > [class*="language-"] {
+        width: 100%;
+        margin: 2.5em auto;
+    }
+
+    @include sp {
+        & > [class*="language-"] {
+            max-width: none;
+        }
+    }
+
+    p {
+        margin-top: 1em;
+        font-size: 3.75vw;
+
+        @include notSp {
+            margin: 1.5em auto auto;
+        }
+    }
+
+    .header-anchor {
+        display: none;
+    }
+
+    a:not(.header-anchor) {
+        text-decoration: solid underline $colorBrand;
+        color: currentColor;
+    }
+
+    a:not(.header-anchor):not([target="_blank"]) {
+        &::before {
+            width: 100%;
+        }
+    }
+
+    a:not(.header-anchor) .icon {
+        margin: auto 0.2em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin: 1.5em auto 0.5em;
+    }
+
+    h3 {
+        font-size: 1.1em;
+        margin: 1.5em auto auto;
+        line-height: 1.4;
+        text-indent: 0.5em;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: $horizontalPaddingSp;
+            transform: translateY(-50%);
+            display: block;
+            width: 0.2em;
+            height: 80%;
+            background: rgba($colorWhite, 0.8);
+        }
+    }
+
+    h4 {
+        font-size: 0.9em;
+        margin: 1.5em auto auto;
+        text-indent: 0.6em;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: $horizontalPaddingSp;
+            transform: translateY(-50%);
+            display: block;
+            width: 0.2em;
+            height: 80%;
+            background: rgba($colorWhite, 0.6);
+        }
+    }
+
+    h5 {
+        font-size: 1em;
+        margin: 1.5em auto 0.5em;
+    }
+
+    h6 {
+        font-size: 0.9em;
+        margin: 1.5em auto 0.5em;
+    }
+
+    > ul,
+    > ul > li {
+        padding: 0;
+    }
+
+    > ul {
+        width: calc(100% - #{$horizontalPaddingSp} * 2);
+        padding-left: 1.2em;
+        margin: 0.5em $horizontalPaddingSp auto $horizontalPaddingSp;
+
+        @include notSp {
+            margin: auto;
+            padding: 0 0 0 1.3em;
+        }
+    }
+
+    > ul li {
+        width: 100%;
+        font-size: 3.75vw;
+        list-style-type: disc;
+    }
+
+    > ul ul {
+        width: 100%;
+        padding-left: 1.3em;
+    }
+
+    li > p {
+        margin: 0.5em 0;
+    }
+
+    hr {
+        padding: 0;
+        border: 0;
+        height: 1px;
+        margin: 1.5em auto;
+        background: $colorWhite;
+    }
+
+    code {
+        background: rgba($colorWhite, 0.2);
+        margin: auto 0.2em;
+        padding: 0 0.2em;
+        font-size: 0.9em;
+        line-height: 1.4;
+    }
+
+    pre[class*="language-"] code {
+        background: transparent;
+        padding: 0;
+        overflow: scroll;
+    }
+}
+/* purgecss end ignore */
