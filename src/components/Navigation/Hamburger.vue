@@ -17,7 +17,9 @@
   appearance: none;
   border: 0;
   background: transparent;
-  position: relative;
+  position: fixed;
+  top: $horizontalPaddingSp;
+  right: $horizontalPaddingSp;
   display: block;
   font-size: 8vw;
   width: 1em;
