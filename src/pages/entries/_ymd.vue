@@ -1,21 +1,24 @@
 <!-- eslint-disable -->
 <template>
-  <main
-    id="main"
-    class="Main"
-    role="main"
-    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
-  >
-    <article v-if="entry" class="Main__inner Article" :class="getVisibilityClass">
-      <header class="Article__header Header" :style="thumbnailStyle">
-        <div class="Header__inner">
-          <p class="Header__date">{{ publish }}</p>
-          <p class="Header__subject">{{ subject }}</p>
-        </div>
-      </header>
-      <div class="Article__content Content" v-html="entryHtml" />
-    </article>
-  </main>
+  <div>
+    <breadcrumb :routes="routes" />
+    <main
+      id="main"
+      class="Main"
+      role="main"
+      v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+    >
+      <article v-if="entry" class="Main__inner Article" :class="getVisibilityClass">
+        <header class="Article__header Header" :style="thumbnailStyle">
+          <div class="Header__inner">
+            <p class="Header__date">{{ publish }}</p>
+            <p class="Header__subject">{{ subject }}</p>
+          </div>
+        </header>
+        <div class="Article__content Content" v-html="entryHtml" />
+      </article>
+    </main>
+  </div>
 </template>
 <!-- eslint-enable -->
 
@@ -113,6 +116,7 @@ import dateFormat from 'date-fns/format';
 import { Entry } from '~/value-objects/Entry';
 import { Thumbnail } from '~/value-objects/Thumbnail';
 import SectionBreak from '~/components/SectionBreak.vue';
+import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
 
 type Data = { isVisible: boolean; entry?: Entry };
 type Methods = {
@@ -129,7 +133,7 @@ type Props = {};
 
 const defaultData: Data = { isVisible: false, entry: undefined };
 
-const components = { SectionBreak };
+const components = { SectionBreak, Breadcrumb };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -151,6 +155,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     thumbnailStyle() {
       return this.entry && this.entry.thumbnail ? { backgroundImage: `url('${this.entry.thumbnail.url}')` } : {};
+    },
+    routes() {
+      return [{ to: '/', desc: 'Top' }, { to: '/entries', desc: 'entries' }, { desc: this.subject }];
     },
   },
   mounted() {

@@ -1,26 +1,29 @@
 <!-- eslint-disable -->
 <template>
-  <main
-    id="main"
-    class="Main"
-    role="main"
-    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
-  >
-    <div class="Main__inner" :class="getVisibilityClass">
-      <h2 class="header">entries</h2>
-      <p class="desc">エントリー一覧です。</p>
-      <section
-        v-for="year in Object.keys(entries)
-          .sort()
-          .reverse()"
-        :key="year"
-        class="Year"
-      >
-        <h3 class="Year__header">{{ year }}</h3>
-        <entry-list class="Year__entry-list" :entries="entries[year]" />
-      </section>
-    </div>
-  </main>
+  <div>
+    <breadcrumb :routes="routes" />
+    <main
+      id="main"
+      class="Main"
+      role="main"
+      v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+    >
+      <div class="Main__inner" :class="getVisibilityClass">
+        <h2 class="header">entries</h2>
+        <p class="desc">エントリー一覧です。</p>
+        <section
+          v-for="year in Object.keys(entries)
+            .sort()
+            .reverse()"
+          :key="year"
+          class="Year"
+        >
+          <h3 class="Year__header">{{ year }}</h3>
+          <entry-list class="Year__entry-list" :entries="entries[year]" />
+        </section>
+      </div>
+    </main>
+  </div>
 </template>
 <!-- eslint-enable -->
 
@@ -28,7 +31,7 @@
 .Main {
   z-index: 1;
   position: relative;
-  padding-top: 20vw;
+  padding-top: 10vw;
 
   @include notSp {
     padding-top: 5rem;
@@ -131,6 +134,7 @@ import { Thumbnail } from '~/value-objects/Thumbnail';
 import ContentSection from '~/components/About/ContentSection.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
 import EntryList from '~/components/Common/EntryList.vue';
+import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
 
 type KeyYearEntries = { [year: number]: Entry[] };
 
@@ -139,12 +143,12 @@ type Methods = {
   getEntryListStyle: (thumbnail?: Thumbnail) => { backgroundImage?: string };
   visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
 };
-type Computed = { entries: KeyYearEntries; getVisibilityClass: string };
+type Computed = { entries: KeyYearEntries; getVisibilityClass: string; routes: Route[] };
 type Props = {};
 
 const defaultData: Data = { isVisible: false };
 
-const components = { ContentSection, SectionBreak, EntryList };
+const components = { ContentSection, SectionBreak, EntryList, Breadcrumb };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -167,6 +171,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     getVisibilityClass() {
       return this.isVisible ? '-visible' : '';
+    },
+    routes() {
+      return [{ to: '/', desc: 'Top' }, { desc: 'entries' }];
     },
   },
   methods: {

@@ -1,26 +1,29 @@
 <!-- eslint-disable -->
 <template>
-  <main
-    id="main"
-    class="Main"
-    role="main"
-    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
-  >
-    <div class="Main__inner" :class="getVisibilityClass">
-      <h2 class="header">lts</h2>
-      <p class="desc">過去にしゃべくり倒したLTです。</p>
-      <section
-        v-for="year in Object.keys(lts)
-          .sort()
-          .reverse()"
-        :key="year"
-        class="Year"
-      >
-        <h3 class="Year__header">{{ year }}</h3>
-        <lt-list class="Year__entry-list" :lts="lts[year]" />
-      </section>
-    </div>
-  </main>
+  <div>
+    <breadcrumb :routes="routes" />
+    <main
+      id="main"
+      class="Main"
+      role="main"
+      v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
+    >
+      <div class="Main__inner" :class="getVisibilityClass">
+        <h2 class="header">lts</h2>
+        <p class="desc">過去にしゃべくり倒したLTです。</p>
+        <section
+          v-for="year in Object.keys(lts)
+            .sort()
+            .reverse()"
+          :key="year"
+          class="Year"
+        >
+          <h3 class="Year__header">{{ year }}</h3>
+          <lt-list class="Year__entry-list" :lts="lts[year]" />
+        </section>
+      </div>
+    </main>
+  </div>
 </template>
 <!-- eslint-enable -->
 
@@ -28,7 +31,7 @@
 .Main {
   z-index: 1;
   position: relative;
-  padding-top: 20vw;
+  padding-top: 10vw;
 
   @include notSp {
     padding-top: 5rem;
@@ -129,6 +132,7 @@ import Vue from 'vue';
 import { LT } from '~/value-objects/LT';
 import LtList from '~/components/Common/LTList.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
+import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
 
 type KeyYearLTs = { [year: number]: LT[] };
 
@@ -136,12 +140,12 @@ type Data = { isVisible: boolean };
 type Methods = {
   visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
 };
-type Computed = { lts: KeyYearLTs; getVisibilityClass: string };
+type Computed = { lts: KeyYearLTs; getVisibilityClass: string; routes: Route[] };
 type Props = {};
 
 const defaultData: Data = { isVisible: false };
 
-const components = { SectionBreak, LtList };
+const components = { SectionBreak, LtList, Breadcrumb };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -164,6 +168,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
     getVisibilityClass() {
       return this.isVisible ? '-visible' : '';
+    },
+    routes() {
+      return [{ to: '/', desc: 'Top' }, { desc: 'lts' }];
     },
   },
   methods: {

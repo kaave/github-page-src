@@ -27,7 +27,7 @@ const defaultData: Data = { isShowSpMenu: false, isInitialize: false };
 
 const components = { Hamburger, SpModalMenu, PcMenu };
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+const vue = Vue.extend<Data, Methods, Computed, Props>({
   components,
   props: {
     menus: { type: Array, default: () => [] },
@@ -41,12 +41,13 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     setTimeout(() => (this.isInitialize = true), 50);
   },
   methods: {
-    handleHambergerClick: throttle(function handleHambergerClick() {
-      // @ts-ignore
+    handleHambergerClick: throttle(function handleHambergerClick(this: typeof vue) {
       this.isShowSpMenu = !this.isShowSpMenu;
     }, 1000),
   },
 });
+
+export default vue;
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
   <div>
-    <breadcrumb />
+    <breadcrumb :routes="routes" />
     <main id="main" class="Main" role="main">
       <content-section
         class="About"
@@ -46,7 +46,7 @@
 .Main {
   z-index: 1;
   position: relative;
-  padding-top: 20vw;
+  padding-top: 10vw;
 
   @include notSp {
     padding-top: 5rem;
@@ -60,11 +60,11 @@ import { mapGetters, mapMutations, MutationMethod } from 'vuex';
 
 import ContentSection from '~/components/About/ContentSection.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
-import Breadcrumb from '~/components/Common/Breadcrumb.vue';
+import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
 
 type Data = {};
 type Methods = {};
-type Computed = {};
+type Computed = { routes: Route[] };
 type Props = {};
 
 const defaultData: Data = {};
@@ -75,6 +75,11 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   components,
   data() {
     return { ...defaultData };
+  },
+  computed: {
+    routes() {
+      return [{ to: '/', desc: 'Top' }, { desc: 'about' }];
+    },
   },
 });
 </script>
