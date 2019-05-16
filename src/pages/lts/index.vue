@@ -7,17 +7,17 @@
     v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
   >
     <div class="Main__inner" :class="getVisibilityClass">
-      <h2 class="header">entries</h2>
-      <p class="desc">エントリー一覧です。</p>
+      <h2 class="header">lts</h2>
+      <p class="desc">過去にしゃべくり倒したLTです。</p>
       <section
-        v-for="year in Object.keys(entries)
+        v-for="year in Object.keys(lts)
           .sort()
           .reverse()"
         :key="year"
         class="Year"
       >
         <h3 class="Year__header">{{ year }}</h3>
-        <entry-list class="Year__entry-list" :entries="entries[year]" />
+        <lt-list class="Year__entry-list" :lts="lts[year]" />
       </section>
     </div>
   </main>
@@ -126,25 +126,22 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import { Entry } from '~/value-objects/Entry';
-import { Thumbnail } from '~/value-objects/Thumbnail';
-import ContentSection from '~/components/About/ContentSection.vue';
+import { LT } from '~/value-objects/LT';
+import LtList from '~/components/Common/LTList.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
-import EntryList from '~/components/Common/EntryList.vue';
 
-type KeyYearEntries = { [year: number]: Entry[] };
+type KeyYearLTs = { [year: number]: LT[] };
 
 type Data = { isVisible: boolean };
 type Methods = {
-  getEntryListStyle: (thumbnail?: Thumbnail) => { backgroundImage?: string };
   visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
 };
-type Computed = { entries: KeyYearEntries; getVisibilityClass: string };
+type Computed = { lts: KeyYearLTs; getVisibilityClass: string };
 type Props = {};
 
 const defaultData: Data = { isVisible: false };
 
-const components = { ContentSection, SectionBreak, EntryList };
+const components = { SectionBreak, LtList };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -152,27 +149,24 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     return { ...defaultData };
   },
   computed: {
-    entries() {
-      const { entries }: { entries: Entry[] } = this.$store.state.entries;
-      const sortedEntries: KeyYearEntries = entries
-        .map(entry => ({ entry, year: entry.publish.getFullYear() }))
+    lts() {
+      const { lts }: { lts: LT[] } = this.$store.state.lts;
+      const sortedLTs: KeyYearLTs = lts
+        .map(lt => ({ lt, year: lt.date.getFullYear() }))
         .reduce(
-          (tmp, { year, entry }) => ({
+          (tmp, { year, lt }) => ({
             ...tmp,
-            [year]: [...(tmp[year] ? tmp[year] : []), entry],
+            [year]: [...(tmp[year] ? tmp[year] : []), lt],
           }),
           {},
         );
-      return sortedEntries;
+      return sortedLTs;
     },
     getVisibilityClass() {
       return this.isVisible ? '-visible' : '';
     },
   },
   methods: {
-    getEntryListStyle(thumbnail?: Thumbnail): { backgroundImage?: string } {
-      return thumbnail ? { backgroundImage: `url('${thumbnail.url}')` } : {};
-    },
     visibilityChanged(isVisible, entry) {
       if (!isVisible) return;
 

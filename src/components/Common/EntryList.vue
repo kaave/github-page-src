@@ -25,6 +25,10 @@
 <!-- eslint-enable -->
 
 <style lang="scss" scoped>
+.Entries__entries {
+  width: 100%;
+}
+
 .Entries__list {
   width: 100%;
 

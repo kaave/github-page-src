@@ -1,140 +1,36 @@
 <!-- eslint-disable -->
 <template>
-  <section
-    class="LTs"
-    v-observe-visibility="{ callback: visibilityChanged, intersection: { threshold: [0.4] }, once: true }"
-  >
-    <div class="LTs__inner" :class="getVisibilityClass">
-      <h2 class="LTs__header">recent lts</h2>
-      <lt-list :lts="lts.slice(0, 3)" />
-      <nuxt-link to="/lts" class="LTs__link">一覧はこちら 👉</nuxt-link>
-    </div>
-  </section>
+  <ul class="LTs__lts">
+    <li v-for="(lts, i) in divideLTs" :key="i" class="LTs__lts-cell">
+      <ul class="LTs__list">
+        <li v-for="{ date, eventName, title, description, link } in lts" :key="title" class="LTs__cell">
+          <a :href="link" class="LTs__show" target="_blank" rel="noopener">
+            <span
+              v-for="key in ['top', 'right', 'bottom', 'left']"
+              :key="key"
+              class="LTs__show-border"
+              :class="`-${key}`"
+              role="presentation"
+            ></span>
+            <div class="LTs__show-inner">
+              <div class="LTs__date">{{ getDateString(date) }} @ {{ eventName }}</div>
+              <div class="LTs__title">{{ title }}</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </template>
 <!-- eslint-enable -->
 
 <style lang="scss" scoped>
-.LTs {
-  position: relative;
+.LTs__lts {
   width: 100%;
 }
 
-.LTs__inner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
-  padding: 0 4vw;
-
-  @include notSp {
-    max-width: $maxWidth;
-    padding: 0 $horizontalPadding;
-    margin: auto;
-  }
-}
-
-.LTs__header {
-  width: 100%;
-  font-size: 7.5vw;
-  line-height: 1;
-  margin-bottom: 0.5em;
-  opacity: 0;
-  transition: opacity 300ms ease-out;
-
-  $pc-font-size: 4;
-  @include notSp {
-    @include responsiveFontSize($pc-font-size);
-    margin-bottom: 1.5em;
-  }
-
-  @include maxSize {
-    font-size: $pc-font-size + rem;
-  }
-}
-
-.-visible .LTs__header {
-  opacity: 1;
-  animation: show-header 1.2s $easeOutExpo forwards;
-}
-
-.LTs__text {
-  font-size: 3.75vw;
-  line-height: 1.8;
-  opacity: 0;
-  transition: opacity 300ms 400ms ease-out;
-
-  $pc-font-size: 1.6;
-  @include notSp {
-    line-height: 1.6;
-    @include responsiveFontSize($pc-font-size);
-  }
-
-  @include maxSize {
-    font-size: $pc-font-size + rem;
-  }
-}
-
-.-visible .LTs__text {
-  opacity: 1;
-}
-
-.LTs__link {
-  position: relative;
-  display: inline-block;
+.LTs__lts-cell:not(:first-child) {
   margin-top: 1em;
-  font-size: 4.286vw;
-  color: currentColor;
-  opacity: 0;
-  transition: opacity 300ms 400ms ease-out;
-  overflow: hidden;
-
-  $pc-font-size: 1.8;
-  @include notSp {
-    @include responsiveFontSize($pc-font-size);
-    margin-top: 3em;
-  }
-
-  @include maxSize {
-    font-size: $pc-font-size + rem;
-  }
-
-  &,
-  &:hover,
-  &:active {
-    text-decoration: none;
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    z-index: 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: $colorWhite;
-  }
-
-  &::before {
-    opacity: 0.3;
-  }
-
-  &::after {
-    transform: translate3d(-100%, 0, 0);
-    transition: transform 400ms $easeOutExpo;
-  }
-}
-
-.-visible .LTs__link {
-  opacity: 1;
-}
-
-.LTs__link:hover::after {
-  transform: none;
 }
 
 .LTs__list {
@@ -298,20 +194,19 @@
 import Vue from 'vue';
 import dateFormat from 'date-fns/format';
 
-import LtList from '~/components/Common/LTList.vue';
 import { LT } from '~/value-objects/LT';
 
-type Data = { isVisible: boolean };
+type Data = {};
 type Methods = {
   getDateString(date: Date): string;
-  visibilityChanged: (isVisible: boolean, entry: IntersectionObserverEntry) => void;
+  getLink(date: Date): string;
 };
-type Computed = { getVisibilityClass: string };
+type Computed = { divideLTs: LT[][] };
 type Props = { lts: LT[] };
 
 const defaultData: Data = { isVisible: false };
 
-const components = { LtList };
+const components = {};
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
@@ -322,18 +217,21 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     return { ...defaultData };
   },
   computed: {
-    getVisibilityClass() {
-      return this.isVisible ? '-visible' : '';
+    divideLTs() {
+      const result: LT[][] = [];
+      this.lts
+        .map((lt, i) => ({ lt, index: Math.floor(i / 3) }))
+        .forEach(({ lt, index: i }) => (result[i] = [...(result[i] ? result[i] : []), lt]));
+
+      return result;
     },
   },
   methods: {
     getDateString(date: Date): string {
       return dateFormat(date, 'MMM, D YYYY');
     },
-    visibilityChanged(isVisible, entry) {
-      if (!isVisible) return;
-
-      this.isVisible = true;
+    getLink(date: Date): string {
+      return dateFormat(date, 'YYYY-MM-DD');
     },
   },
 });
