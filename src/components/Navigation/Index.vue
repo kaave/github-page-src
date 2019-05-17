@@ -35,6 +35,11 @@ const vue = Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return { ...defaultData };
   },
+  watch: {
+    $route() {
+      this.isShowSpMenu = false;
+    },
+  },
   mounted() {
     setTimeout(() => (this.isInitialize = true), 50);
   },
