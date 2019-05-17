@@ -81,6 +81,15 @@
 
 .desc {
   line-height: 1.6;
+
+  $pc-font-size: 1.6;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Year {

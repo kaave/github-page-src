@@ -10,7 +10,7 @@
     >
       <div class="Main__inner" :class="getVisibilityClass">
         <h2 class="header">lts</h2>
-        <p class="desc">過去にしゃべくり倒したLTです。</p>
+        <p class="desc">過去にしゃべくり倒したLTです。情報が古いものも多々ありますのでご注意ください。</p>
         <section
           v-for="year in Object.keys(lts)
             .sort()
@@ -81,6 +81,15 @@
 
 .desc {
   line-height: 1.6;
+
+  $pc-font-size: 1.6;
+  @include notSp {
+    @include responsiveFontSize($pc-font-size);
+  }
+
+  @include maxSize {
+    font-size: $pc-font-size + rem;
+  }
 }
 
 .Year {
