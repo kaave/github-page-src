@@ -91,7 +91,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   align-items: center;
   width: 100%;
   height: 100%;
-  color: $colorBlack;
+  color: $colorWhite;
 }
 
 .Introduction__background {
@@ -113,138 +113,21 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   display: block;
   width: 100%;
   height: 100%;
-  background: $colorWhite;
+  background: $colorBlack;
 }
 
-.Introduction__background-block:first-child {
-  $block-size: 12%;
+$block-sizes: 12%, 12%, 2%, 1%, 9%, 22%, 2%, 8%, 12%, 4%, 3%, 15%;
 
-  width: $block-size;
+@for $i from 1 through length($block-sizes) {
+  $block-size: nth($block-sizes, $i);
 
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
+  .Introduction__background-block:nth-child(#{$i}) {
+    width: $block-size;
 
-.Introduction__background-block:nth-child(2) {
-  $block-size: 12%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(3) {
-  $block-size: 2%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(4) {
-  $block-size: 1%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(5) {
-  $block-size: 9%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(6) {
-  $block-size: 22%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(7) {
-  $block-size: 2%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(8) {
-  $block-size: 8%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(9) {
-  $block-size: 12%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(10) {
-  $block-size: 4%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:nth-child(11) {
-  $block-size: 3%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
-  }
-}
-
-.Introduction__background-block:last-child {
-  $block-size: 15%;
-
-  width: $block-size;
-
-  @include notSp {
-    width: 100%;
-    height: $block-size;
+    @include notSp {
+      width: 100%;
+      height: $block-size;
+    }
   }
 }
 
@@ -253,7 +136,24 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   transition: all 600ms $easeOutExpo;
 }
 
-.-loaded .Introduction__inner {
-  opacity: 0;
+.-loaded .Introduction__background-block {
+  animation: introduction-block 600ms $easeOutExpo;
+}
+
+@keyframes introduction-block {
+  from {
+    background: $colorBlack;
+    opacity: 1;
+  }
+
+  50% {
+    background: $colorWhite;
+    opacity: 1;
+  }
+
+  to {
+    background: $colorBlack;
+    opacity: 0;
+  }
 }
 </style>
