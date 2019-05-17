@@ -200,6 +200,10 @@
         margin: auto 0.2em;
         padding: 0 0.2em;
         line-height: 1.4;
+
+        @include notSp {
+            font-size: 1.2em;
+        }
     }
 
     pre[class*="language-"] code {
