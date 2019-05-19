@@ -11,6 +11,8 @@ import imageminWebp from 'imagemin-webp';
 import axios from 'axios';
 import format from 'date-fns/format';
 
+import { getHead } from './src/common/getHead';
+
 Dotenv.config();
 
 const graphCMSEndPoint = 'https://api-apeast.graphcms.com/v1/cjtk95ol51hpr01dnf53vq3ji/master';
@@ -35,63 +37,12 @@ async function getPublishedEntries(): Promise<string[]> {
  */
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT || '3000', 10);
-const baseUrl = process.env.BASE_URL || `http://${host}:${port}`;
-const polyfills = ['default', 'es2015', 'es2016', 'es2017', 'IntersectionObserver'];
-
-/*
- * meta
- */
-const title = 'kaave.github.io';
-const description = '愛知県在住ソフトウェアエンジニアの@kaaveこと安部亨佑のWebサイトです。';
-const metaImage = 'https://dummyimage.com/300x200/3b8070/fff.png&text=Nuxt.js+template';
-
-const og = [
-  { property: 'og:title', content: title },
-  { property: 'og:description', content: description },
-  { property: 'og:image', content: metaImage },
-  { property: 'og:type', content: 'website' },
-  { property: 'og:url', content: baseUrl },
-  { property: 'og:site_name', content: title },
-];
-const twitter = [
-  { property: 'twitter:card', content: 'summary_large_image' },
-  // { property: "twitter:site", content: "@BarackObama" }
-];
-const meta = [
-  { charset: 'utf-8' },
-  { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-  { hid: 'description', name: 'description', content: description },
-  { hid: 'itempropName', itemprop: 'name', content: title },
-  { hid: 'itempropDesc', itemprop: 'description', content: description },
-  { hid: 'itempropImage', itemprop: 'image', content: metaImage },
-  {
-    hid: 'format-detection',
-    name: 'format-detection',
-    content: 'email=no,telephone=no,address=no',
-  },
-  { hid: 'robots', name: 'robots', content: 'noindex' }, // TODO: 完成まで隠す
-  ...og,
-  ...twitter,
-];
 
 async function getNuxtConfig(isDev: boolean) {
   const config: NuxtConfiguration = {
     mode: 'universal',
     srcDir: './src',
-    head: {
-      title,
-      meta,
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-      script: [
-        {
-          src: `https://polyfill.io/v3/polyfill.min.js?features=${polyfills.join('%2C')}&flags=gated`,
-          type: 'text/javascript',
-          body: true,
-          defer: true,
-          crossorigin: 'anonymous',
-        },
-      ],
-    },
+    head: getHead({}, true),
     loading: { color: '#fff' },
     css: ['sanitize.css', '~/styles/global.scss'],
     plugins: ['~/plugins/isMobile.ts', '~/plugins/observeVisibility.ts'],
