@@ -61,6 +61,7 @@ import { mapGetters, mapMutations, MutationMethod } from 'vuex';
 import ContentSection from '~/components/About/ContentSection.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
 import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
+import { getHead } from '~/common/getHead';
 
 type Data = {};
 type Methods = {};
@@ -70,9 +71,15 @@ type Props = {};
 const defaultData: Data = {};
 
 const components = { ContentSection, SectionBreak, Breadcrumb };
+const head = () =>
+  getHead({
+    title: { content: 'about | ' },
+    description: { content: 'このページは当サイトの概要を説明しています。' },
+  });
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
+  head,
   data() {
     return { ...defaultData };
   },

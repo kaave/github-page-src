@@ -1,7 +1,3 @@
-import Dotenv from 'dotenv';
-
-Dotenv.config();
-
 export type OptionValues = { content: string; force?: boolean };
 export type OptionKeys = 'title' | 'description' | 'image' | 'url';
 export type Options = { [key in OptionKeys]?: OptionValues };
@@ -72,19 +68,19 @@ function getUseContents({ title, description, image, url }: Options): OptionCont
   const result: OptionContents = { ...common };
 
   if (title) {
-    result.title = title.force ? title.content : `${title.content} | ${common.title}`;
+    result.title = title.force ? title.content : `${title.content}${common.title}`;
   }
 
   if (description) {
-    result.description = description.force ? description.content : `${description.content} | ${common.description}`;
+    result.description = description.force ? description.content : `${common.description}${description.content}`;
   }
 
   if (image) {
-    result.image = image.force ? image.content : `${image.content} | ${common.image}`;
+    result.image = image.force ? image.content : `${image.content}${common.image}`;
   }
 
   if (url) {
-    result.url = url.force ? url.content : `${url.content} | ${common.url}`;
+    result.url = url.force ? url.content : `${url.content}${common.url}`;
   }
 
   return result;

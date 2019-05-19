@@ -144,6 +144,7 @@ import ContentSection from '~/components/About/ContentSection.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
 import EntryList from '~/components/Common/EntryList.vue';
 import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
+import { getHead } from '~/common/getHead';
 
 type KeyYearEntries = { [year: number]: Entry[] };
 
@@ -158,9 +159,15 @@ type Props = {};
 const defaultData: Data = { isVisible: false };
 
 const components = { ContentSection, SectionBreak, EntryList, Breadcrumb };
+const head = () =>
+  getHead({
+    title: { content: 'entries | ' },
+    description: { content: '当サイトのエントリー一覧です。' },
+  });
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
+  head,
   data() {
     return { ...defaultData };
   },

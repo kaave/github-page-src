@@ -142,6 +142,7 @@ import { LT } from '~/value-objects/LT';
 import LtList from '~/components/Common/LTList.vue';
 import SectionBreak from '~/components/SectionBreak.vue';
 import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
+import { getHead } from '~/common/getHead';
 
 type KeyYearLTs = { [year: number]: LT[] };
 
@@ -155,9 +156,15 @@ type Props = {};
 const defaultData: Data = { isVisible: false };
 
 const components = { SectionBreak, LtList, Breadcrumb };
+const head = () =>
+  getHead({
+    title: { content: 'lts | ' },
+    description: { content: '過去に発表したLTの一覧です。' },
+  });
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
+  head,
   data() {
     return { ...defaultData };
   },
