@@ -43,7 +43,7 @@ async function getNuxtConfig(isDev: boolean) {
     mode: 'universal',
     srcDir: './src',
     head: getHead({}, true),
-    loading: { color: '#fff' },
+    loading: false,
     css: ['sanitize.css', '~/styles/global.scss'],
     plugins: ['~/plugins/isMobile.ts', '~/plugins/observeVisibility.ts'],
     modules: [

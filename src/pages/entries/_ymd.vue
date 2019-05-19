@@ -117,6 +117,7 @@ import { Entry } from '~/value-objects/Entry';
 import { Thumbnail } from '~/value-objects/Thumbnail';
 import SectionBreak from '~/components/SectionBreak.vue';
 import Breadcrumb, { Route } from '~/components/Common/Breadcrumb.vue';
+import { getHead } from '~/common/getHead';
 
 type Data = { isVisible: boolean; entry?: Entry };
 type Methods = {
@@ -137,6 +138,16 @@ const components = { SectionBreak, Breadcrumb };
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
+  head() {
+    return this.entry
+      ? getHead({
+          title: { content: `${this.entry.subject} | entries | ` },
+          description: { content: `この記事は「${this.entry.subject}」についてです。` },
+          image: { content: this.entry.thumbnail.url, force: true },
+          url: { content: `/entries/${dateFormat(this.entry.publish, 'YYYY-MM-DD')}` },
+        })
+      : {};
+  },
   data() {
     return { ...defaultData };
   },

@@ -152,8 +152,12 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       return result;
     },
   },
+  watch: {
+    $route() {
+      this.index = (this.index + 1) % this.imageUrls.length;
+    },
+  },
   mounted() {
-    setInterval(() => (this.index = (this.index + 1) % this.imageUrls.length), 3000);
     window.addEventListener('resize', debounce(this.fitCanvas.bind(this), 200));
     this.fitCanvas();
   },

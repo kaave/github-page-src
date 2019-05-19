@@ -9,12 +9,13 @@ export type OG = { property: string; content: string };
  */
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT || '3000', 10);
+const url = process.env.BASE_URL || `http://${host}:${port}`;
 const polyfills = ['default', 'es2015', 'es2016', 'es2017', 'IntersectionObserver'];
 const common: OptionContents = {
+  url,
   title: 'kaave.github.io',
   description: '愛知県在住ソフトウェアエンジニアの@kaaveこと安部亨佑のWebサイトです。',
-  image: 'https://dummyimage.com/300x200/3b8070/fff.png&text=Nuxt.js+template',
-  url: process.env.BASE_URL || `http://${host}:${port}`,
+  image: `${url}/images/ogp.jpg`,
 };
 
 function getOg(options: OptionContents, isInit: boolean = false): OG[] {
@@ -64,7 +65,7 @@ function getMeta(options: OptionContents, isInit: boolean = false) {
   return meta;
 }
 
-function getUseContents({ title, description, image, url }: Options): OptionContents {
+function getUseContents({ title, description, image, url: targetUrl }: Options): OptionContents {
   const result: OptionContents = { ...common };
 
   if (title) {
@@ -76,11 +77,11 @@ function getUseContents({ title, description, image, url }: Options): OptionCont
   }
 
   if (image) {
-    result.image = image.force ? image.content : `${image.content}${common.image}`;
+    result.image = image.force ? image.content : `${common.image}${image.content}`;
   }
 
-  if (url) {
-    result.url = url.force ? url.content : `${url.content}${common.url}`;
+  if (targetUrl) {
+    result.url = targetUrl.force ? targetUrl.content : `${common.url}${targetUrl.content}`;
   }
 
   return result;
