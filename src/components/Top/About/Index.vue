@@ -8,7 +8,7 @@
       <h2 class="About__header">about</h2>
       <p class="About__text">
         名古屋在住のWebエンジニアによる一応ブログメインのサイトです。
-        メモ、実験、音楽ネタ、料理ネタ、自転車ネタやらでまわしてます。
+        <br />メモ、実験、音楽ネタ、料理ネタ、自転車ネタやらでまわしてこうと思ってます。
       </p>
       <nuxt-link to="/about" class="About__link">詳細はこちら 👉</nuxt-link>
     </div>

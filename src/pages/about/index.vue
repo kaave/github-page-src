@@ -16,11 +16,7 @@
       <content-section
         class="HowToCreate"
         title="how to create"
-        :desc="[
-          `当サイトはVuePressで構築されており、
-      コードをGitHubにPushするとCircleCIがビルドかけて生成物を配信用リポジトリにPushし、
-      配信はGitHub PagesからというVuePress以外は一昔前の構成で制作・運営しております。`,
-        ]"
+        :desc="[`nuxtを基盤に、GraphCMSで動的コンテンツつくってます。そのうちもうちょい書きます。`]"
       />
       <section-break />
       <content-section

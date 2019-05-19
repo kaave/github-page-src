@@ -11,8 +11,8 @@
         </span>
       </h2>
       <div class="Top__texts">
-        <p class="Top__text">愛知県でWebエンジニアとしてはたらく安部亨佑 aka kaaveのWebサイトです。</p>
-        <p class="Top__text">楽しんでってください！</p>
+        <p class="Top__text">愛知県でWebエンジニアやってる安部亨佑 aka kaaveのWebサイトです。</p>
+        <p class="Top__text">よろしくおねがいします!</p>
       </div>
     </div>
     <div class="Top__arrow">
