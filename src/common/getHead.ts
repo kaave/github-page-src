@@ -55,7 +55,7 @@ function getMeta(options: OptionContents, isInit: boolean = false) {
     meta.push({ charset: 'utf-8' });
     meta.push({ name: 'viewport', content: 'width=device-width, initial-scale=1' });
     meta.push({ hid: 'format-detection', name: 'format-detection', content: 'email=no,telephone=no,address=no' });
-    meta.push({ hid: 'robots', name: 'robots', content: 'noindex' }); // TODO: 完成まで隠す;
+    // meta.push({ hid: 'robots', name: 'robots', content: 'noindex' }); // TODO: 完成まで隠す;
     /*
      * twitter
      */
@@ -95,6 +95,7 @@ export function getHead(options: Options = {}, isInit: boolean = false) {
     title: contents.title,
     ...(isInit
       ? {
+          htmlAttrs: { lang: 'ja' },
           title: contents.title,
           meta: getMeta(contents, true),
           link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

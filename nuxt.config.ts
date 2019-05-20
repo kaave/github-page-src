@@ -53,6 +53,7 @@ async function getNuxtConfig(isDev: boolean) {
       'nuxt-webfontloader',
       '@nuxtjs/apollo',
       '@nuxtjs/markdownit',
+      '@nuxtjs/google-analytics',
     ],
     apollo: {
       clientConfigs: {
@@ -79,6 +80,7 @@ async function getNuxtConfig(isDev: boolean) {
         families: ['Crimson+Text:400,700'], // set your favorite fonts
       },
     },
+    googleAnalytics: { id: process.env.GOOGLE_ANALYTICS },
     build: {
       postcss: {
         plugins: {
