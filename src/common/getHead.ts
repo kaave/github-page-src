@@ -1,7 +1,8 @@
-export type OptionValues = { content: string; force?: boolean };
+type PickUp<T, K> = { [key in keyof T]: K extends keyof T[key] ? T[key][K] : unknown };
+
 export type OptionKeys = 'title' | 'description' | 'image' | 'url';
-export type Options = { [key in OptionKeys]?: OptionValues };
-export type OptionContents = { [key in keyof Options]-?: string };
+export type Options = { [key in OptionKeys]?: { content: string; force?: boolean } };
+export type OptionContents = PickUp<Required<Options>, 'content'>;
 export type OG = { property: string; content: string };
 
 /*

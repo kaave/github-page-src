@@ -17,3 +17,9 @@ export const mutations = {
 };
 
 export type MutationKeys = keyof typeof mutations;
+
+export const actions = {
+  async nuxtServerInit({ dispatch }) {
+    return dispatch('entries/get');
+  },
+};

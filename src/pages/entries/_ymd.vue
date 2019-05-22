@@ -171,6 +171,20 @@ export default Vue.extend<Data, Methods, Computed, Props>({
       return [{ to: '/', desc: 'Top' }, { to: '/entries', desc: 'entries' }, { desc: this.subject }];
     },
   },
+  async asyncData({ store, params }) {
+    /* eslint-disable consistent-return */
+    const { ymd } = params;
+    const { entries }: { entries: Entry[] } = store.state.entries;
+
+    const entry = entries.find(({ publish }) => dateFormat(publish, 'YYYY-MM-DD') === ymd);
+    if (!entry) {
+      console.error(`not found entry: ${entry}`);
+      return;
+    }
+
+    return { entry };
+    /* eslint-enable */
+  },
   mounted() {
     const { ymd } = this.$route.params;
     const { entries }: { entries: Entry[] } = this.$store.state.entries;
