@@ -9,8 +9,7 @@ export type OG = { property: string; content: string };
  */
 const host = process.env.HOST || 'localhost';
 const port = parseInt(process.env.PORT || '3000', 10);
-// const url = process.env.BASE_URL || `http://${host}:${port}`;
-const url = 'https://kaave.github.io' || `http://${host}:${port}`;
+const url = process.env.BASE_URL || `http://${host}:${port}`;
 const polyfills = ['default', 'es2015', 'es2016', 'es2017', 'IntersectionObserver'];
 const common: OptionContents = {
   url,
