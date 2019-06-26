@@ -129,14 +129,14 @@ type Computed = {
   subject: string;
   entryHtml: string;
   thumbnailStyle: { backgroundImage?: string };
+  routes: { to?: string; desc: string }[];
 };
-type Props = {};
 
-const defaultData: Data = { isVisible: false, entry: undefined };
+const defaultData: Data = { isVisible: false };
 
 const components = { SectionBreak, Breadcrumb };
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default Vue.extend({
   components,
   head() {
     return this.entry
@@ -148,27 +148,29 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         })
       : {};
   },
-  data() {
-    return { ...defaultData };
-  },
+  data: () => ({ ...defaultData }),
   computed: {
-    getVisibilityClass() {
+    getVisibilityClass(): string {
       return this.isVisible ? '-visible' : '';
     },
-    publish() {
+    publish(): string {
       return this.entry ? dateFormat(this.entry.publish, 'MMM, D YYYY') : '';
     },
-    subject() {
+    subject(): string {
       return this.entry ? this.entry.subject : '';
     },
-    entryHtml() {
+    entryHtml(): string {
       return this.entry ? this.entry.entryHtml : '';
     },
-    thumbnailStyle() {
+    thumbnailStyle(): { backgroundImage?: string } {
       return this.entry && this.entry.thumbnail ? { backgroundImage: `url('${this.entry.thumbnail.url}')` } : {};
     },
-    routes() {
-      return [{ to: '/', desc: 'Top' }, { to: '/entries', desc: 'entries' }, { desc: this.subject }];
+    routes(): { to?: string; desc: string }[] {
+      return [
+        { to: '/', desc: 'Top' },
+        { to: '/entries', desc: 'entries' },
+        { desc: this.entry ? this.entry.subject : '' }, // TODO: this.subject type error...
+      ];
     },
   },
   async asyncData({ store, params }) {
@@ -202,7 +204,7 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     this.entry = entry;
   },
   methods: {
-    visibilityChanged(isVisible, entry) {
+    visibilityChanged(isVisible: boolean, entry: IntersectionObserverEntry) {
       if (!isVisible) return;
 
       this.isVisible = true;
