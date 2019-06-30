@@ -24,5 +24,3 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
 });
 </script>
-
-<style lang="scss" scoped></style>

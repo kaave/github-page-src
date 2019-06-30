@@ -5,27 +5,35 @@ module.exports = {
     'plugin:nuxt/recommended',
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'prettier/standard',
     'prettier/vue',
     'prettier/@typescript-eslint',
   ],
-  plugins: ['@typescript-eslint', 'nuxt'],
+  plugins: ['@typescript-eslint'],
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
+    extraFileExtensions: ['.vue'],
   },
   settings: {
     'import/resolver': {
+      typescript: {}, // use <root>/tsconfig.json
       node: { extensions: ['.ts', '.js', '.mjs'] },
     },
   },
   rules: {
     'no-return-assign': ['error', 'except-parens'],
+    // クラスメンバーは改行で区切るが、1行の場合はスルー
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+
+    /*
+     * import
+     */
     // default exportを押す 無効化
     'import/prefer-default-export': 'off',
     // ~が機能しないため外す
     'import/no-unresolved': 'off',
-    // クラスメンバーは改行で区切るが、1行の場合はスルー
-    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     // dependenciesに入ってないのをimportすると怒る 無効化 vueとかあるんで
     'import/no-extraneous-dependencies': 'off',
 

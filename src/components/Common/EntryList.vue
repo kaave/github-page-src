@@ -192,7 +192,6 @@ import dateFormat from 'date-fns/format';
 
 import { Entry } from '~/value-objects/Entry';
 import { Thumbnail } from '~/value-objects/Thumbnail';
-import EntryList from '~/components/Common/EntryList.vue';
 
 type Data = {};
 type Methods = {
@@ -205,7 +204,7 @@ type Props = { entries: Entry[] };
 
 const defaultData: Data = { isVisible: false };
 
-const components = { EntryList };
+const components = {};
 
 export default Vue.extend<Data, Methods, Computed, Props>({
   components,
