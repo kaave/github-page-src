@@ -8,15 +8,15 @@
 html,
 body {
     font-family: $fontFamilyMincho;
-    font-feature-settings: "palt";
+    color: $colorWhite;
     letter-spacing: 0.02em;
+    background: $colorBlack;
     word-spacing: 1px;
+    font-feature-settings: "palt";
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background: $colorBlack;
-    color: $colorWhite;
 }
 
 pre {

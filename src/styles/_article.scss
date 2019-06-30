@@ -8,9 +8,9 @@
     position: relative;
     display: block;
     font-size: 4.286vw;
-    letter-spacing: 0.05em;
     line-height: 1.8;
     color: $colorWhite;
+    letter-spacing: 0.05em;
 
     $pc-font-size: 1.8;
     @include notSp {
@@ -25,12 +25,12 @@
         position: relative;
         display: block;
         width: 100%;
-        padding-left: $horizontalPaddingSp;
         padding-right: $horizontalPaddingSp;
+        padding-left: $horizontalPaddingSp;
 
         @include notSp {
-            padding-left: $horizontalPadding;
             padding-right: $horizontalPadding;
+            padding-left: $horizontalPadding;
         }
     }
 
@@ -65,8 +65,8 @@
     }
 
     a:not(.header-anchor) {
-        text-decoration: solid underline $colorBrand;
         color: currentColor;
+        text-decoration: solid underline $colorBrand;
 
         @include notSp {
             &:hover {
@@ -86,26 +86,26 @@
     }
 
     h2 {
-        font-size: 1.2em;
         margin: 1.5em auto 0.5em;
+        font-size: 1.2em;
     }
 
     h3 {
-        font-size: 1.1em;
         margin: 1.5em auto auto;
+        font-size: 1.1em;
         line-height: 1.4;
         text-indent: 0.5em;
 
         &::before {
-            content: "";
             position: absolute;
             top: 50%;
             left: $horizontalPaddingSp;
-            transform: translateY(-50%);
             display: block;
             width: 0.2em;
             height: 80%;
+            content: "";
             background: rgba($colorWhite, 0.8);
+            transform: translateY(-50%);
 
             @include notSp {
                 left: $horizontalPadding;
@@ -114,20 +114,20 @@
     }
 
     h4 {
-        font-size: 0.9em;
         margin: 1.5em auto auto;
+        font-size: 0.9em;
         text-indent: 0.6em;
 
         &::before {
-            content: "";
             position: absolute;
             top: 50%;
             left: $horizontalPaddingSp;
-            transform: translateY(-50%);
             display: block;
             width: 0.2em;
             height: 80%;
+            content: "";
             background: rgba($colorWhite, 0.6);
+            transform: translateY(-50%);
 
             @include notSp {
                 left: $horizontalPadding;
@@ -136,13 +136,13 @@
     }
 
     h5 {
-        font-size: 1em;
         margin: 1.5em auto 0.5em;
+        font-size: 1em;
     }
 
     h6 {
-        font-size: 0.9em;
         margin: 1.5em auto 0.5em;
+        font-size: 0.9em;
     }
 
     > ul,
@@ -188,18 +188,18 @@
     }
 
     hr {
-        padding: 0;
-        border: 0;
         height: 1px;
+        padding: 0;
         margin: 1.5em auto;
         background: $colorWhite;
+        border: 0;
     }
 
     code {
-        background: rgba($colorWhite, 0.2);
-        margin: auto 0.2em;
         padding: 0 0.2em;
+        margin: auto 0.2em;
         line-height: 1.4;
+        background: rgba($colorWhite, 0.2);
 
         @include notSp {
             font-size: 1.2em;
@@ -207,9 +207,9 @@
     }
 
     pre[class*="language-"] code {
-        background: transparent;
         padding: 0;
         overflow: scroll;
+        background: transparent;
     }
 }
 /* purgecss end ignore */

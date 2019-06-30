@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['stylelint-config-recommended-scss', 'stylelint-config-prettier'],
+  extends: ['stylelint-config-recess-order', 'stylelint-config-recommended-scss', 'stylelint-config-prettier'],
   ignoreFiles: ['node_modules/**/*', '.nuxt/**/*', 'dist/**/*'],
   syntax: 'scss',
   rules: {
