@@ -11,6 +11,8 @@
         "build": "nuxt build",
         "start": "nuxt start",
         "generate": "nuxt generate",
+        "typecheck": "tsc --noEmit -p ./tsconfig.production.json",
+        "lint-staged": "lint-staged",
         "lint": "run-s lint:*",
         "lint:script": "eslint --ignore-path .gitignore 'src/**/*.{js,ts}'",
         "lint:style": "stylelint --ignore-path .gitignore './src/**/*.scss'",
@@ -23,8 +25,7 @@
         "fix:prettier": "prettier --write --ignore-path .gitignore './src/**/*.{ts,js,scss,md,json}'",
         "fix:vue": "run-s fix:vue:*",
         "fix:vue:script": "eslint --fix --ignore-path .gitignore './src/**/*.vue'",
-        "fix:vue:prettier": "prettier --write --ignore-path .gitignore './src/**/*.vue'",
-        "precommit": "npm run lint"
+        "fix:vue:prettier": "prettier --write --ignore-path .gitignore './src/**/*.vue'"
     },
     "browserslist": [
         "ie 11",
@@ -35,7 +36,7 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "run-s typecheck lint-staged"
         }
     },
     "resolutions": {
