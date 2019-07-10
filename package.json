@@ -34,11 +34,6 @@
         "not ie <= 10",
         "not chrome 49"
     ],
-    "husky": {
-        "hooks": {
-            "pre-commit": "run-s build lint-staged"
-        }
-    },
     "resolutions": {
         "node-fetch": "^2.6.0"
     },
